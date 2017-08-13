@@ -1,7 +1,6 @@
 var app = require('electron').app;  // Module to control application life.
 var BrowserWindow = require('electron').BrowserWindow;  // Module to create native browser window.
 
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
@@ -21,10 +20,12 @@ app.on('ready', function () {
     // Create the browser window.
 
 
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({width: 1200, height: 750});
+
+    var ProductsIpc = require('./ipc/products.ipc')(mainWindow);
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.loadURL('file://' + __dirname + './../front-end/index.html');
 
     // Open the DevTools.
     mainWindow.openDevTools();
@@ -36,5 +37,7 @@ app.on('ready', function () {
         // when you should delete the corresponding element.
         mainWindow = null;
     });
+    
+    ProductsIpc.init();
 });
 
