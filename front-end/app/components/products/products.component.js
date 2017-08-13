@@ -6,12 +6,19 @@
     awareHouseApp.controller('ProductsCtrl', 
         ['$scope', 'ipc', 'Products', function ($scope, ipc, Products) {
 
+            $scope.product = [];
+            $scope.selectedProduct = {};
+
             ipc.send('get-products', '');
 
             $scope.$on('products:updated', function(event, products) {
                 $scope.products = products;
                 $scope.$apply();
             });
+
+            $scope.selectProduct = function(product) {
+                $scope.selectedProduct = product;
+            } 
     }]);
 })();
 
