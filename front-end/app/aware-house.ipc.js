@@ -3,13 +3,11 @@
 
     var awareHouseApp = angular.module('awareHouseApp');
 
-    awareHouseApp.run(['electron', 'Products',
-        function(electron, Products) {
+    awareHouseApp.run(['$rootScope', 'electron', 'Products',
+        function($rootScope, electron, Products) {
             
             electron.ipcRenderer.on('products', (event, msg) => {
-                console.log(msg);
-                console.log("Los productos llegaron en el canal correcto!");
-                Products.set(msg);
+                $rootScope.$broadcast('products:updated',msg);
             });
         }
     ]);
