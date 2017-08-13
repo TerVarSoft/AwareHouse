@@ -13,6 +13,7 @@
 
             $scope.$on('products:updated', function(event, products) {
                 $scope.products = products;
+                $scope.selectedProduct = products[0];
                 $scope.$apply();
             });
 

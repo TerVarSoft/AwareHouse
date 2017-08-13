@@ -1,1 +1,45 @@
-<h1>heyyy {{product.code}}</h1>
+<div flex>
+    <div class="row" flex>
+        <md-card flex=100>
+            <md-card-title>
+                <md-card-title-media>
+                    <div class="md-media-sm card-media" layout>
+                        <md-icon ng-class="{'md-avatar-icon': true}" aria-label="product-icon">
+                            <ng-md-icon icon="{{product.type == 0 ? 'build' : 'border_all'}}" size="30">
+                            </ng-md-icon>
+                        </md-icon>
+                    </div>
+                </md-card-title-media>
+                <md-card-title-text>
+                    <span class="md-headline">{{product.code}}</span>
+                    <span class="md-subhead description">{{product.description}}</span>
+                </md-card-title-text>
+            </md-card-title>
+        </md-card>
+    </div>
+    
+    <div class="row"  layout="row">
+        <md-card flex=60>
+            <md-subheader class="md-no-sticky">Detalles</md-subheader>
+            <md-list>
+                <md-list-item>
+                    <p>Cantidad</p>
+                    <p class="md-secondary">{{product.quantity}}</p>
+                </md-list-item>
+                <md-list-item>
+                    <p>Color</p>
+                    <p class="md-secondary">{{product.color}}</p>
+                </md-list-item>
+            </md-list>
+
+        </md-card>
+        <md-card flex=40>
+            <md-subheader class="md-no-sticky">Precios</md-subheader>
+            <md-list>
+                <md-list-item ng-repeat="price in product.prices">
+                    <p> {{ price }} Bs. </p>
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </div>
+</div>
