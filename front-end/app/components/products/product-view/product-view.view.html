@@ -5,7 +5,7 @@
                 <md-card-title-media>
                     <div class="md-media-sm card-media" layout>
                         <md-icon ng-class="{'md-avatar-icon': true}" aria-label="product-icon">
-                            <ng-md-icon icon="{{product.type == 0 ? 'build' : 'border_all'}}" size="30">
+                            <ng-md-icon icon="{{productTypes[product.type].icon}}" size="30">
                             </ng-md-icon>
                         </md-icon>
                     </div>
@@ -13,12 +13,28 @@
                 <md-card-title-text>
                     <span class="md-headline">{{product.code}}</span>
                     <span class="md-subhead description">{{product.description}}</span>
+                    <span class="md-subhead description">
+                    </span>
                 </md-card-title-text>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-icon-button">
+                        <md-icon ng-class="{'md-avatar-icon': true}" aria-label="product-icon">
+                            <ng-md-icon icon="delete" size="25">
+                            </ng-md-icon>
+                        </md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="editProduct($event, product)">
+                        <md-icon ng-class="{'md-avatar-icon': true}" aria-label="product-icon">
+                            <ng-md-icon icon="edit" size="25">
+                            </ng-md-icon>
+                        </md-icon>
+                    </md-button>
+                </md-card-actions>
             </md-card-title>
         </md-card>
     </div>
-    
-    <div class="row"  layout="row">
+
+    <div class="row" layout="row">
         <md-card flex=60>
             <md-subheader class="md-no-sticky">Detalles</md-subheader>
             <md-list>

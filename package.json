@@ -37,6 +37,7 @@
     "grunt-search": "^0.1.8"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "mongoose": "^4.11.6"
   }
 }

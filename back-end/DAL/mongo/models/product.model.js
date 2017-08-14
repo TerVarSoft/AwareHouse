@@ -4,7 +4,7 @@ var productSchema = mongoose.Schema({
     code: String,
     description: String,
     type: Number,
-    color: String,
+    color: Number,
     price: [Number],
     quantity: Number
 });

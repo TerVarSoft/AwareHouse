@@ -3,13 +3,17 @@
 
     const awareHouseApp = angular.module('awareHouseApp');
 
-    awareHouseApp.directive('productList', [function() {
+    awareHouseApp.directive('productList', ['ProductConstant', function(ProductConstant) {
+        
         return {
             scope: {
                 products: '=',
-                onSelectProduct: '='
+                selectProduct: '=onSelectProduct'
             },
-            templateUrl: './app/components/products/product-list/product-list.view.html'
+            templateUrl: './app/components/products/product-list/product-list.view.html',
+            link:  function postLink(scope, element, attrs) {
+                scope.productTypes = ProductConstant.PRODUCT_TYPES;
+            }
         }
     }]);
 })();

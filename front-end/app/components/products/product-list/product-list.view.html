@@ -1,8 +1,8 @@
 <md-list>
     <md-subheader class="md-no-sticky">Productos</md-subheader>
-    <md-list-item class="md-2-line" ng-repeat="product in products" ng-click="onSelectProduct(product)">
+    <md-list-item class="md-2-line" ng-repeat="product in products" ng-click="selectProduct(product)">
         <md-icon ng-class="{'md-avatar-icon': true}" aria-label="product-icon">
-            <ng-md-icon icon="{{product.type == 0 ? 'build' : 'border_all'}}">
+            <ng-md-icon icon="{{productTypes[product.type].icon}}">
             </ng-md-icon>
         </md-icon>
 

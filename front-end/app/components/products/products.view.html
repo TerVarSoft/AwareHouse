@@ -1,8 +1,16 @@
-<div layout="row" flex="100" style="height: 100%">
+<div layout="row" flex="100">
     <md-content flex="30">
         <product-list products="products" on-select-product="selectProduct"></product-list>
     </md-content>
+    
     <div flex="70">
-        <product-view product="selectedProduct"></product-view>
+        <product-view product="selectedProduct" on-edit-product="editProduct"></product-view>
     </div>
+
+    <md-button class="md-fab md-fab-bottom-right" ng-click="createProduct($event)" aria-label="add-button">
+        <md-icon aria-label="product-icon">
+            <ng-md-icon icon="add">
+            </ng-md-icon>
+        </md-icon>
+    </md-button>
 </div>

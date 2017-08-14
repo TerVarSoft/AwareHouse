@@ -1,0 +1,92 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Nuevo Producto</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="detalles">
+                    <div class="md-dialog-content">
+                        <form>
+                            <div layout="row" flex=100>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Tipo</label>
+                                    <md-select ng-model="product.type">
+                                        <md-option ng-repeat="type in types" value="{{type.key}}">
+                                            {{type.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+                            <div layout="row" flex=100>
+                                <md-input-container flex=30>
+                                    <label>Codigo</label>
+                                    <input ng-model="product.code">
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex="70">
+                                    <label>Descripcion</label>
+                                    <input ng-model="product.description">
+                                </md-input-container>
+                            </div>
+
+                            <div layout "row" flex=100>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Cantidad</label>
+                                    <input type="number" ng-model="product.quantity">
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Color</label>
+                                    <md-select ng-model="product.color">
+                                        <md-option ng-repeat="color in colors" value="{{color.key}}">
+                                            {{color.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </form>
+                    </div>
+                </md-tab>
+                <md-tab label="precios">
+                    <div class="md-dialog-content">
+                        <div layout="row" flex=100>
+                            <md-input-container class="md-block" flex="70">
+                                <label>Tipo</label>
+                                <md-select ng-model="newPrice.type">
+                                    <md-option ng-repeat="prictType in priceTypes" value="{{prictType}}">
+                                        {{prictType}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex="30">
+                                <label>Precio</label>
+                                <input type="number" ng-model="newPrice.value">
+                            </md-input-container>
+                            
+                        </div>
+
+                        <div layout "row">
+                        </div>
+                    </div>
+                </md-tab>
+            </md-tabs>
+
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="answer('not useful')">
+                Cancelar
+            </md-button>
+            <md-button ng-click="answer('useful')">
+                Guardar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
