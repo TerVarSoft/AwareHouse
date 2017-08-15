@@ -32,7 +32,7 @@
                     },
                     targetEvent: event,
                     clickOutsideToClose: true,
-                    fullscreen: true 
+                    fullscreen: false 
                 }).then(function (answer) {
                 }, function () {
                 });
@@ -49,7 +49,7 @@
                     },
                     targetEvent: event,
                     clickOutsideToClose: true,
-                    fullscreen: true 
+                    fullscreen: false 
                 }).then(function (answer) {
                 }, function () {
                 });

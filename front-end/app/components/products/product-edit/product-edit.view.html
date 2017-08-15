@@ -12,7 +12,7 @@
                     <div class="md-dialog-content">
                         <form>
                             <div layout="row" flex=100>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex=100>
                                     <label>Tipo</label>
                                     <md-select ng-model="product.type">
                                         <md-option ng-repeat="type in types" value="{{type.key}}">
@@ -28,19 +28,19 @@
                                     <input ng-model="product.code">
                                 </md-input-container>
 
-                                <md-input-container class="md-block" flex="70">
+                                <md-input-container class="md-block" flex=70>
                                     <label>Descripcion</label>
                                     <input ng-model="product.description">
                                 </md-input-container>
                             </div>
 
                             <div layout "row" flex=100>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex=50>
                                     <label>Cantidad</label>
                                     <input type="number" ng-model="product.quantity">
                                 </md-input-container>
 
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex=50>
                                     <label>Color</label>
                                     <md-select ng-model="product.color">
                                         <md-option ng-repeat="color in colors" value="{{color.key}}">
@@ -55,23 +55,29 @@
                 <md-tab label="precios">
                     <div class="md-dialog-content">
                         <div layout="row" flex=100>
-                            <md-input-container class="md-block" flex="70">
+                            <md-input-container class="md-block" flex="60">
                                 <label>Tipo</label>
                                 <md-select ng-model="newPrice.type">
-                                    <md-option ng-repeat="prictType in priceTypes" value="{{prictType}}">
-                                        {{prictType}}
+                                    <md-option ng-repeat="prictType in priceTypes" value="{{prictType.key}}">
+                                        {{prictType.value}}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
 
-                            <md-input-container class="md-block" flex="30">
+                            <md-input-container class="md-block" flex="40">
                                 <label>Precio</label>
                                 <input type="number" ng-model="newPrice.value">
                             </md-input-container>
-                            
                         </div>
 
-                        <div layout "row">
+                        <div layout "row" flex=100>
+                            <md-list flex>
+                                <md-subheader class="md-no-sticky">Lista de Precios</md-subheader>
+                                <md-list-item ng-repeat="price in product.prices">
+                                    <p> {{ price }} </p>
+                                    <!--<md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>-->
+                                </md-list-item>
+                            </md-list>
                         </div>
                     </div>
                 </md-tab>
@@ -81,7 +87,7 @@
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
-            <md-button ng-click="answer('not useful')">
+            <md-button ng-click="cancel()">
                 Cancelar
             </md-button>
             <md-button ng-click="answer('useful')">

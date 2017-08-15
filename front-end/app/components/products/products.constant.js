@@ -18,7 +18,7 @@
             {key: 0, value: '25%'},
             {key: 1, value: '50%'},
             {key: 2, value: '65%'},
-            {key: 3, value: '60%'}
+            {key: 3, value: '80%'}
         ]
     });
 })();

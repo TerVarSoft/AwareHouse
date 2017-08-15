@@ -4,17 +4,16 @@
     const awareHouseApp = angular.module('awareHouseApp');
 
     awareHouseApp.controller('ProductEditCtrl',
-        ['$scope', 'ProductConstant', 'product', function ($scope, ProductConstant, product) {
+        ['$scope', '$mdDialog', 'ProductConstant', 'product', function ($scope, $mdDialog, ProductConstant, product) {
 
             $scope.product = _.clone(product);
             $scope.colors = ProductConstant.PRODUCT_COLORS;
             $scope.types = ProductConstant.PRODUCT_TYPES;
 
-            $scope.priceTypes = [
-                "20%",
-                "50%",
-                "80%",
-                "90%",
-            ]
+            $scope.priceTypes = ProductConstant.PRODUCT_PRICE_TYPES;
+
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            }
         }]);
 })();
