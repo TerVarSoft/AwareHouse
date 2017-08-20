@@ -1,0 +1,26 @@
+<md-subheader>Nuevo Usuario</md-subheader>
+
+<div class="row" flex=100 layout="row" layout-align="center start">
+    <md-input-container class="md-block" flex=25>
+        <label>Role</label>
+        <md-select ng-model="user.role">
+            <md-option ng-repeat="role in roles" value="{{role.key}}">
+                {{role.value}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container flex=30>
+        <label>Nombre</label>
+        <input ng-model="user.name">
+    </md-input-container>
+
+    <md-input-container flex=30>
+        <label>Apellido</label>
+        <input ng-model="user.lastName">
+    </md-input-container>
+
+    <section layout-align="center start">
+        <md-button class="md-raised md-accent" ng-click="save()">Agregar</md-button>
+    </section>
+</div>
