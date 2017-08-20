@@ -1,6 +1,14 @@
-<md-list>
+
+<md-list flex layout-align="space-around stretch">
     <md-subheader class="md-no-sticky">Productos</md-subheader>
-    <md-list-item class="md-2-line" ng-repeat="product in products" ng-click="selectProduct(product)">
+    
+    <div class="row" layout="row" layout-align="center center">
+        <md-input-container  class="md-block" style="margin: 0px;" flex=80>
+            <label>Sabes el codigo?</label>
+            <input ng-model="searchText.code">
+        </md-input-container>
+    </div>
+    <md-list-item class="md-2-line" ng-repeat="product in products | filter:searchText" ng-click="selectProduct(product)">
         <md-icon ng-class="{'md-avatar-icon': true}" aria-label="product-icon">
             <ng-md-icon icon="{{productTypes[product.type].icon}}">
             </ng-md-icon>

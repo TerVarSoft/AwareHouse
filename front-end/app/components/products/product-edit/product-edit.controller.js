@@ -4,13 +4,33 @@
     const awareHouseApp = angular.module('awareHouseApp');
 
     awareHouseApp.controller('ProductEditCtrl',
-        ['$scope', '$mdDialog', 'ProductConstant', 'product', function ($scope, $mdDialog, ProductConstant, product) {
+        ['$scope', '$mdDialog', 'ProductsUtil', 'product', function ($scope, $mdDialog, ProductsUtil, product) {
 
-            $scope.product = _.clone(product);
-            $scope.colors = ProductConstant.PRODUCT_COLORS;
-            $scope.types = ProductConstant.PRODUCT_TYPES;
+            $scope.product = _.cloneDeep(product);
+            $scope.product.prices = $scope.product.prices || [];
+            
+            $scope.colors = ProductsUtil.getProductColors();
+            $scope.types = ProductsUtil.getProductTypes();
+            $scope.priceTypes = ProductsUtil.getProductPriceTypes();
+            $scope.priceTypesToDisplay = 
+                ProductsUtil.getFilteredProductPrices($scope.product.prices);
+        
+            $scope.addNewPrice = function() {
+                $scope.product.prices.push(_.clone($scope.newPrice));
+                $scope.priceTypesToDisplay = 
+                    ProductsUtil.getFilteredProductPrices($scope.product.prices);
+                $scope.newPrice = {};
+            }
 
-            $scope.priceTypes = ProductConstant.PRODUCT_PRICE_TYPES;
+            $scope.removePrice = function(price) {
+                _.pull($scope.product.prices, price);
+                $scope.priceTypesToDisplay = 
+                    ProductsUtil.getFilteredProductPrices($scope.product.prices);
+            }
+
+            $scope.save = function() {
+                $mdDialog.hide($scope.product);
+            }
 
             $scope.cancel = function() {
                 $mdDialog.cancel();

@@ -4,10 +4,12 @@
     </md-content>
     
     <div flex="70">
-        <product-view product="selectedProduct" on-edit-product="editProduct"></product-view>
+        <product-view product="selectedProduct"
+            on-edit-product="editProduct"
+            on-delete-product="deleteProduct"></product-view>
     </div>
 
-    <md-button class="md-fab md-fab-bottom-right" ng-click="createProduct($event)" aria-label="add-button">
+    <md-button class="md-fab md-fab-bottom-right" ng-click="editProduct($event, {})" aria-label="createProduct">
         <md-icon aria-label="product-icon">
             <ng-md-icon icon="add">
             </ng-md-icon>
