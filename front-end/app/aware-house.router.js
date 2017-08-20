@@ -9,12 +9,20 @@
             
             function ($routeProvider, $mdIconProvider) {
                 $routeProvider.when(
-                    '/', {
+                    '/products', {
                         templateUrl: './app/components/products/products.view.html',
                         controller : "ProductsCtrl"
                     }
                 );
-                $routeProvider.otherwise({redirectTo: '/'});
+
+                $routeProvider.when(
+                    '/users', {
+                        templateUrl: './app/components/users/users.view.html',
+                        controller : "UsersCtrl"
+                    }
+                );
+
+                $routeProvider.otherwise({redirectTo: '/products'});
                 
                 $mdIconProvider
                     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)

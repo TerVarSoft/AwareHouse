@@ -6,6 +6,7 @@
     awareHouseApp.controller('ProductsCtrl',
         ['$scope', '$log', '$mdDialog', 'ipc', 'Products', function ($scope, $log, $mdDialog, ipc, Products) {
 
+            $scope.$parent.title = "Almacen";
             $scope.product = [];
             $scope.selectedProduct = {};
 

@@ -59,7 +59,7 @@
     ];
 
 
-    var menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
+    //var menu = Menu.buildFromTemplate(template);
+    //Menu.setApplicationMenu(menu);
 
 })();
