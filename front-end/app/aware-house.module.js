@@ -8,6 +8,7 @@
             'ngMaterial',
             'ngAnimate',
             'ngMdIcons',
+            'md.data.table',
             'electangular'
         ]
     );

@@ -1,1 +1,7 @@
-<h1>{{test}}</h1>
+<md-content flex=100 layout="row" layout-align="center center">
+    <div flex=90>
+        <user-edit user="newUser" on-save-user="onSaveUser"></user-edit>
+
+        <user-list users="users"></user-list>
+    </div>
+</md-content>

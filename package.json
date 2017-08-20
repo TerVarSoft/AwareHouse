@@ -37,6 +37,7 @@
     "grunt-search": "^0.1.8"
   },
   "dependencies": {
+    "angular-material-data-table": "^0.10.10",
     "angular-material-icons": "^0.7.1",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.6",

@@ -3,6 +3,8 @@
 
     const awareHouseApp = angular.module('awareHouseApp');
 
+    /**IMPORTANT: This key value pairs need to be in orden!
+     *  in favour of easy access */
     awareHouseApp.constant('ProductConstant', {
         PRODUCT_TYPES: [
             {key: 0, value: 'Perfil de Aluminio', icon: 'border_all'},
