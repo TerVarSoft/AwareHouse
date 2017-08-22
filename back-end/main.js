@@ -22,7 +22,9 @@ app.on('ready', function () {
 
     mainWindow = new BrowserWindow({width: 1200, height: 750});
 
+    /**Specifi Ipc Configurations */
     var ProductsIpc = require('./ipc/products.ipc')(mainWindow);
+    var UsersIpc = require('./ipc/users.ipc')(mainWindow);
 
     // and load the index.html of the app.
     mainWindow.loadURL('file://' + __dirname + './../front-end/index.html');
@@ -39,5 +41,6 @@ app.on('ready', function () {
     });
     
     ProductsIpc.init();
+    UsersIpc.init();
 });
 

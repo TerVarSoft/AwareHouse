@@ -7,7 +7,10 @@
         
         return {
             scope: {
-                users: '='
+                users: '=',
+                selectedUsers: '=selectedUsers',
+                delete: '=onDeleteUser',
+                edit: '=onEditUser'
             },
             templateUrl: './app/components/users/user-list/user-list.view.html',
             link:  function postLink(scope, element, attrs) {

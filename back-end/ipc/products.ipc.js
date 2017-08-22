@@ -22,7 +22,7 @@ const ProductsIpc = function(mainWindow) {
             winston.verbose(`${JSON.stringify(productToUpdate)}`);
 
             ProductService.save(productToUpdate).then(productUpdated => {
-                if(productToUpdate) {
+                if(productUpdated) {
                     mainWindow.webContents.send('product:updated', productUpdated);
                 } else {
                     mainWindow.webContents.send('product:errorUpdate', '');
@@ -34,7 +34,6 @@ const ProductsIpc = function(mainWindow) {
             winston.info(`Request to delete product: ${productToDelete.code}`, loggingOptions);
 
             ProductService.remove(productToDelete).then(productDeletedId => {
-                console.log(productDeletedId);
                 mainWindow.webContents.send('product:deleted', productDeletedId);
             });
         });

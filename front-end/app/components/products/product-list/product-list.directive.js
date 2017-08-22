@@ -3,7 +3,7 @@
 
     const awareHouseApp = angular.module('awareHouseApp');
 
-    awareHouseApp.directive('productList', ['ProductConstant', function(ProductConstant) {
+    awareHouseApp.directive('productList', ['ProductsUtil', function(ProductsUtil) {
         
         return {
             scope: {
@@ -12,7 +12,7 @@
             },
             templateUrl: './app/components/products/product-list/product-list.view.html',
             link:  function postLink(scope, element, attrs) {
-                scope.productTypes = ProductConstant.PRODUCT_TYPES;
+                scope.productTypes = ProductsUtil.getProductTypes();
             }
         }
     }]);

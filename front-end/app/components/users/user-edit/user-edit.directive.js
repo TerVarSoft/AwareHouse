@@ -8,7 +8,7 @@
         return {
             scope: {
                 user: '=',
-                save: '=onSaveUser'
+                create: '=onCreateUser'
             },
             templateUrl: './app/components/users/user-edit/user-edit.view.html',
             link:  function postLink(scope, element, attrs) {
