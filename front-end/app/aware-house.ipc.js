@@ -3,8 +3,8 @@
 
     var awareHouseApp = angular.module('awareHouseApp');
 
-    awareHouseApp.run(['$rootScope', '$log', 'electron', 'Products',
-        function($rootScope, $log, electron, Products) {
+    awareHouseApp.run(['$rootScope', '$log', '$location', 'electron', 'Products',
+        function($rootScope, $log, $location, electron, Products) {
             
             /**Products */
             electron.ipcRenderer.on('products:updated', (event, msg) => {
@@ -32,6 +32,12 @@
                 $rootScope.$broadcast('user:deleted',msg);
             });
             
+            
+            /**Routes */
+            electron.ipcRenderer.on('routes:change', (event, route) => {
+                $rootScope.$broadcast('routes:change', route);
+            });
+
 
             /** Error Handlers */
 

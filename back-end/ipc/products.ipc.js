@@ -1,19 +1,20 @@
 const winston = require('./../winston.wrapper');
+const _ = require('lodash/core');
 const { ipcMain } = require('electron');
 
 const loggingOptions = { layer: "ipc", file: "products.ipc.js" };
 
 const ProductService = require('./../services/products.service')();
 
-const ProductsIpc = function(mainWindow) {
+const ProductsIpc = function (windows) {
 
-    var init = function() {
-        var self = this;
+    var init = function () {
+
         ipcMain.on('get-products', () => {
             winston.info('Requesting all products', loggingOptions);
 
-            ProductService.findAll().then(function(products) {
-                mainWindow.webContents.send('products:updated', products);
+            ProductService.findAll().then(function (products) {
+                notifyWindows('products:updated', products);
             });
         });
 
@@ -22,10 +23,10 @@ const ProductsIpc = function(mainWindow) {
             winston.verbose(`${JSON.stringify(productToUpdate)}`);
 
             ProductService.save(productToUpdate).then(productUpdated => {
-                if(productUpdated) {
-                    mainWindow.webContents.send('product:updated', productUpdated);
+                if (productUpdated) {
+                    notifyWindows('product:updated', productUpdated);
                 } else {
-                    mainWindow.webContents.send('product:errorUpdate', '');
+                    notifyWindows('product:errorUpdate', '');
                 }
             });
         });
@@ -34,13 +35,19 @@ const ProductsIpc = function(mainWindow) {
             winston.info(`Request to delete product: ${productToDelete.code}`, loggingOptions);
 
             ProductService.remove(productToDelete).then(productDeletedId => {
-                mainWindow.webContents.send('product:deleted', productDeletedId);
+                notifyWindows('product:deleted', productDeletedId);
             });
         });
+
+        function notifyWindows(channel, data) {
+            _.each(windows, window => {
+                window.content().send(channel, data);
+            });
+        }
     }
 
     return {
-        init: init 
+        init: init
     }
 }
 

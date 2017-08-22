@@ -1,19 +1,20 @@
 const winston = require('./../winston.wrapper');
+const _ = require('lodash/core');
 const { ipcMain } = require('electron');
 
 const loggingOptions = { layer: "ipc", file: "users.ipc.js" };
 
 const UserService = require('./../services/users.service')();
 
-const UsersIpc = function(mainWindow) {
+const UsersIpc = function (windows) {
 
-    var init = function() {
-        var self = this;
+    var init = function () {
+
         ipcMain.on('get-users', () => {
             winston.info('Requesting all users', loggingOptions);
 
-            UserService.findAll().then(function(users) {
-                mainWindow.webContents.send('users:updated', users);
+            UserService.findAll().then(function (users) {
+                notifyWindows('users:updated', users);
             });
         });
 
@@ -22,10 +23,10 @@ const UsersIpc = function(mainWindow) {
             winston.verbose(`${JSON.stringify(userToUpdate)}`, loggingOptions);
 
             UserService.save(userToUpdate).then(userUpdated => {
-                if(userUpdated) {
-                    mainWindow.webContents.send('user:updated', userUpdated);
+                if (userUpdated) {
+                    notifyWindows('user:updated', userUpdated);
                 } else {
-                    mainWindow.webContents.send('user:errorUpdate', '');
+                    notifyWindows('user:errorUpdated', '');
                 }
             });
         });
@@ -34,13 +35,19 @@ const UsersIpc = function(mainWindow) {
             winston.info(`Request to delete user: ${userToDelete.name}`, loggingOptions);
 
             UserService.remove(userToDelete).then(userDeletedId => {
-                mainWindow.webContents.send('user:deleted', userDeletedId);
+                notifyWindows('user:deleted', userDeletedId);
             });
         });
+
+        function notifyWindows(channel, data) {
+            _.each(windows, window => {
+                window.content().send(channel, data);
+            });
+        }
     }
 
     return {
-        init: init 
+        init: init
     }
 }
 

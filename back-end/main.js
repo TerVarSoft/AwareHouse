@@ -1,9 +1,12 @@
-var app = require('electron').app;  // Module to control application life.
-var BrowserWindow = require('electron').BrowserWindow;  // Module to create native browser window.
+const app = require('electron').app;  // Module to control application life.
+const windowManager = require('electron-window-manager');
+const BrowserWindow = require('electron').BrowserWindow;  // Module to create native browser window.
+const adminWindow = require('./admin.window');
+const publicWindow = require('./public.window');
+const Menu = require('electron').Menu;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var mainWindow = null;
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -18,29 +21,15 @@ app.on('window-all-closed', function () {
 // initialization and is ready to create browser windows.
 app.on('ready', function () {
     // Create the browser window.
-
-
-    mainWindow = new BrowserWindow({width: 1200, height: 750});
+    windowManager.init({});
 
     /**Specifi Ipc Configurations */
-    var ProductsIpc = require('./ipc/products.ipc')(mainWindow);
-    var UsersIpc = require('./ipc/users.ipc')(mainWindow);
+    var ProductsIpc = require('./ipc/products.ipc')([adminWindow, publicWindow]);
+    var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);            
 
-    // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + './../front-end/index.html');
-
-    // Open the DevTools.
-    mainWindow.openDevTools();
-
-    // Emitted when the window is closed.
-    mainWindow.on('closed', function () {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
-        mainWindow = null;
-    });
-    
     ProductsIpc.init();
     UsersIpc.init();
+
+    publicWindow.open();
 });
 
