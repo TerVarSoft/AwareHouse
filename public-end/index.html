@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../node_modules/angular-material/angular-material.min.css" />
     <link rel="stylesheet" href="../node_modules/angular-material-data-table/dist/md-data-table.min.css" type="text/css" />
 
+    <link rel="stylesheet" href="./app/components/sellings/sellings.style.css"/>
+    
     <script src="../node_modules/angular/angular.min.js"></script>
     <script src="../node_modules/angular-route/angular-route.min.js"></script>
     <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
@@ -22,7 +24,19 @@
     <!-- comments:comment-block html -->
 
     <script src="./app/public-aware-house.module.js"></script>
+    <script src="./app/public-aware-house.ipc.js"></script>
+    <script src="./app/public-aware-house.router.js"></script>
     <script src="./app/public-aware-house.controller.js"></script>
+
+    <script src="./app/components/sellings/sellings.component.js"></script>
+
+    <script src="./app/components/sellings/selling-item-edit/selling-item-edit.controller.js"></script>
+
+    <script src="./app/components/sellings/selling-items-cart/selling-items-cart.directive.js"></script>
+    <script src="./app/components/sellings/product-search/product-search.directive.js"></script>
+   
+    <script src="./app/components/sellings/sellings.service.js"></script>
+    
     <!-- endcomments -->
 
     <!-- comments:uncomment-block html -->
@@ -38,7 +52,9 @@
         <md-toolbar class="md-hue-2" layout-align="center center">
             {{title}}
         </md-toolbar>
-        Heyy!
+        <ng-view class="page" flex>
+            <h1>Loading...</h1>
+        </ng-view>
     </div>
 </body>
 

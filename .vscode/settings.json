@@ -1,0 +1,9 @@
+{
+    "window.zoomLevel": 1,
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "all",
+    "files.exclude":{
+        "build/**": true
+    }
+}

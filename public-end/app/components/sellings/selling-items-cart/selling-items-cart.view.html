@@ -1,0 +1,12 @@
+
+<md-list flex layout-align="space-around stretch">
+    <md-subheader class="md-no-sticky">Productos para la Venta</md-subheader>
+
+    <md-list-item class="md-2-line" ng-repeat="selling in sellings">
+        hola
+        <div class="md-list-item-text">
+            <h3> {{ selling.product.code }} </h3>
+            <p> {{ selling.quantity }} </p>
+        </div>
+    </md-list-item>
+</md-list>

@@ -40,8 +40,12 @@ const ProductsIpc = function (windows) {
         });
 
         function notifyWindows(channel, data) {
+            console.log(windows);
             _.each(windows, window => {
-                window.content().send(channel, data);
+                if(window.object) {
+                    console.log("entraaa")
+                    window.content().send(channel, data);
+                }
             });
         }
     }

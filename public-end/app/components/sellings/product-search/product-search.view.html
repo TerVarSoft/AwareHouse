@@ -1,0 +1,23 @@
+<div layout="column" ng-cloak>
+    <md-content layout-padding layout="column"> 
+        <form ng-submit="$event.preventDefault()">
+            <md-autocomplete
+                md-search-text="searchText"
+                md-items="product in productsQuery(searchText)"
+                md-item-text="product.description"
+                md-selected-item-change="createSelling($event, product)"
+                md-menu-class="autocomplete-custom-template"
+                placeholder="Producto">
+                <md-item-template>
+                    <span class="item-title">
+                        <span> {{product.description}} </span>
+                    </span>
+                    <span class="product-metadata">
+                        <span> Cantidad: {{product.quantity}} </span>
+                        <span> Tipo: {{product.type}} </span>
+                    </span>
+                </md-item-template>
+            </md-autocomplete>
+        </form>
+    </md-content>
+</div>

@@ -1,0 +1,31 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <div ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Venta de Producto</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <form>
+                    <div layout "row" flex=100>
+                        <md-input-container class="md-block" flex=50>
+                            <label>Cantidad</label>
+                            <input type="number" ng-model="selling.quantity">
+                        </md-input-container>
+                    </div>
+                </form>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()">
+                Cancelar
+            </md-button>
+            <md-button ng-click="save()">
+                Agregar al Carrito
+            </md-button>
+        </md-dialog-actions>
+    </div>
+</md-dialog>
