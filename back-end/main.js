@@ -23,10 +23,14 @@ app.on('ready', function () {
     // Create the browser window.
     windowManager.init({});
 
+    /**General Ipc Configurations */
+    var PublicIpc = require('./ipc/public.ipc')([publicWindow], adminWindow);
+
     /**Specifi Ipc Configurations */
     var ProductsIpc = require('./ipc/products.ipc')([adminWindow, publicWindow]);
     var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);
 
+    PublicIpc.init();
     ProductsIpc.init();
     UsersIpc.init();
 

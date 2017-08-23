@@ -11,9 +11,13 @@
                 $rootScope.$broadcast('products:updated', msg);
             });
 
-            /**Admin */
-            electron.ipcRenderer.on('admin:askPassword', (event, data) => {
-                $rootScope.$broadcast('admin:askPassword', data);
+            /**Public */
+            electron.ipcRenderer.on('public:askPassword', (event, data) => {
+                $rootScope.$broadcast('public:askPassword', data);
+            });
+
+            electron.ipcRenderer.on('public:noAdminRole', (event, data) => {
+                $rootScope.$broadcast('public:noAdminRole', data);
             });
         }
     ]);

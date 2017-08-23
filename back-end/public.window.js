@@ -17,8 +17,7 @@ var publicMenu = [
             {
                 label: 'Administracion',
                 click: function () {
-                    //adminWindow.open();
-                    publicWindow.content().send('admin:askPassword', '');
+                    publicWindow.content().send('public:askPassword', '');
                 },
                 accelerator: 'CmdOrCtrl+A'
             }

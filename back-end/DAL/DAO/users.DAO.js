@@ -66,8 +66,22 @@ const UserDAO = function () {
             });
     }
 
+    const findByCode = function (code) {
+        return userMongo.findOne({ code: code })
+            .then(foundUser => {
+                if(foundUser) {
+                    winston.verbose(`Found User by code: ${foundUser.name} with id: ${foundUser._id}`);
+                } else {
+                    winston.warn(`No user found by code`);
+                }
+
+                return foundUser;
+            });
+    }
+
     return {
         findAll: findAll,
+        findByCode: findByCode,
         create: create,
         update: update,
         remove: remove
