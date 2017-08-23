@@ -25,7 +25,7 @@ app.on('ready', function () {
 
     /**Specifi Ipc Configurations */
     var ProductsIpc = require('./ipc/products.ipc')([adminWindow, publicWindow]);
-    var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);            
+    var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);
 
     ProductsIpc.init();
     UsersIpc.init();

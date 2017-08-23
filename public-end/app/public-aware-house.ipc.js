@@ -8,8 +8,12 @@
 
             /**Products */
             electron.ipcRenderer.on('products:updated', (event, msg) => {
-                console.log('asfdsafsf');
                 $rootScope.$broadcast('products:updated', msg);
+            });
+
+            /**Admin */
+            electron.ipcRenderer.on('admin:askPassword', (event, data) => {
+                $rootScope.$broadcast('admin:askPassword', data);
             });
         }
     ]);
