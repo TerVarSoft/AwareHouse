@@ -7,8 +7,7 @@
 
         return {
             scope: {
-                products: '=',
-                createSelling: '=onCreateSelling'
+                productSelect: '=onProductSelect'
             },
             templateUrl: './app/components/sellings/product-search/product-search.view.html',
             controller: ['$scope', '$mdDialog', 'ipc', function ($scope, $mdDialog, ipc) {
@@ -28,7 +27,7 @@
                 }
 
                 $scope.$on('products:updated', function(event, products) {
-                    $scope.products = products;        
+                    $scope.products = products;
                     $scope.$apply();
                 });
             }]

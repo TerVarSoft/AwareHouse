@@ -4,7 +4,7 @@ const adminWindow = require('./admin.window');
 
 var publicWindow = windowManager.createNew('public', 'Publico',
     'file://' + __dirname + './../public-end/index.html', false, {
-        'width': 1000,
+        'width': 1200,
         'height': 700,
         'showDevTools': true,
         'resizable': true

@@ -8,7 +8,7 @@ const SellingDAO = function () {
 
     const findAll = function () {
         return sellingMongo.find({})
-            .sort('code')
+            .sort('-createdAt')
             .then((sellings) => {
                 return sellings.map(selling => {
                     selling.id = selling._id;
@@ -17,11 +17,11 @@ const SellingDAO = function () {
             })
     }
 
-    const create = function (newSellingtData) {
-        let newSelling = new sellingMongo(newSellingtData);
+    const create = function (newSellingData) {
+        let newSelling = new sellingMongo(newSellingData);
 
         return newSelling.save(() => { }).then(savedSelling => {
-            winston.info(`Selling created successfully: ${savedSelling.code} with id: ${savedSelling._id}`);
+            winston.info(`Selling created successfully with id: ${savedSelling._id}`);
             winston.verbose(`${savedSelling}`, loggingOptions);
 
             savedSelling.id = savedSelling._id;

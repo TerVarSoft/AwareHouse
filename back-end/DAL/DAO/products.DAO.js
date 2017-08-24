@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash/core');
 const winston = require('./../../winston.wrapper');
 var productMongo = require('../mongo/models/product.model');
 
@@ -15,6 +16,23 @@ const ProductDAO = function () {
                     return product.toObject();
                 });
             })
+    }
+
+    const findByIds = function (productIds, options) {
+        return productMongo.find({
+            '_id': {
+                $in: _.map(productIds, productId => new mongoose.Types.ObjectId(productId))
+            }
+        }, options.properties).then((products) => {
+            return products.map(product => {
+                product.id = product._id;
+                return product.toObject();
+            });
+        });
+    }
+
+    const findById = function (productId) {
+        return productMongo.findById(productId);
     }
 
     const create = function (newProductData) {
@@ -70,6 +88,8 @@ const ProductDAO = function () {
 
     return {
         findAll: findAll,
+        findByIds: findByIds,
+        findById: findById,
         create: create,
         update: update,
         remove: remove

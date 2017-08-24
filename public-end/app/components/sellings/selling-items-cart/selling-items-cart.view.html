@@ -7,11 +7,11 @@
 <md-list flex layout-align="space-around stretch">
     <md-subheader class="md-no-sticky">Productos para la Venta</md-subheader>
 
-    <md-list-item class="md-2-line" ng-repeat="selling in sellings">
+    <md-list-item class="md-2-line" ng-repeat="sellingItem in selling.items">
         <div class="md-list-item-text">
-            <h3> {{ selling.product.code }} </h3>
-            <p> {{ selling.product.description }} </p>
-            <p> {{ selling.quantity }} </p>
+            <h3> {{ sellingItem.product.code }} </h3>
+            <p> {{ sellingItem.product.description }} </p>
+            <p> {{ sellingItem.quantity }} </p>
 
             <md-icon class="md-secondary" aria-label="deleteSelling" ng-click="removeSellingFromCart(selling)">
                 <ng-md-icon icon="close" size="25">
@@ -22,7 +22,7 @@
     </md-list-item>
 
     <section layout-align="center start">
-        <md-button class="md-raised md-accent" ng-click="removeAllSellingsFromCart()" ng-disabled="sellings.length <= 0">Cancelar</md-button>
-        <md-button class="md-raised md-accent" ng-click="createSellingBatch(sellings)" ng-disabled="sellings.length <= 0">Realizar Venta</md-button>
+        <md-button class="md-raised md-accent" ng-click="removeAllSellingsFromCart()" ng-disabled="selling.items.length <= 0">Cancelar</md-button>
+        <md-button class="md-raised md-accent" ng-click="finishSelling()" ng-disabled="selling.items.length <= 0">Realizar Venta</md-button>
     </section>
 </md-list>

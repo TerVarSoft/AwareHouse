@@ -8,18 +8,25 @@
 </md-toolbar>
 
 <md-table-container>
-    <table md-table md-row-select>
+    <table md-table>
         <thead md-head>
             <tr md-row>
+                <th md-column><span>Fecha</span></th>
                 <th md-column><span>Codigo</span></th>
-                <th md-column><span>Descripcion</span></th>
+                <th md-column><span>Producto</span></th>
+                <th md-column><span>Unidades</span></th>
+                <th md-column><span>Vendedor</span></th>
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row md-select="sellings1" md-select-id="id"
-                 md-auto-select ng-repeat="selling in sellingsBatch">
-                <td md-cell>{{ selling.product.code }}</td>
-                <td md-cell>{{ selling.product.description }}</td>
+            <tr md-row md-select="sellingItem" md-select-id="id"
+                 md-auto-select ng-repeat="sellingItem in sellingItems">
+                
+                <td md-cell>{{ sellingItem.createdAt }}</td>
+                <td md-cell>{{ sellingItem.sellingCode }}</td>
+                <td md-cell>{{ sellingItem.product }}</td>
+                <td md-cell>{{ sellingItem.quantity }}</td>
+                <td md-cell>{{ sellingItem.seller }}</td>
             </tr>
         </tbody>
     </table>

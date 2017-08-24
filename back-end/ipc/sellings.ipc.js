@@ -14,7 +14,19 @@ const SellingsIpc = function (windows) {
             winston.info('Requesting all sellings', loggingOptions);
 
             SellingService.findAll().then(function (sellings) {
-                notifyWindows('sellings:updated', selligs);
+                notifyWindows('sellings:updated', sellings);
+            });
+        });
+
+        ipcMain.on('request-selling-create', (event, request) => {
+            winston.info('Requesting to create a selling', loggingOptions);
+
+            SellingService.requestSellingCreate(request).then(sellings => {
+                if(sellings){
+                    notifyWindows('sellings:updated', sellings);
+                } else {
+                    notifyWindows('selling:rejectCreation', '');
+                }
             });
         });
 

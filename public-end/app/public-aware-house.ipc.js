@@ -11,6 +11,11 @@
                 $rootScope.$broadcast('products:updated', msg);
             });
 
+            /**Sellings */
+            electron.ipcRenderer.on('sellings:updated', (event, msg) => {
+                $rootScope.$broadcast('sellings:updated', msg);
+            });
+
             /**Public */
             electron.ipcRenderer.on('public:askPassword', (event, data) => {
                 $rootScope.$broadcast('public:askPassword', data);

@@ -7,8 +7,8 @@
         
         return {
             scope: {
-                sellings: '=items',
-                createSellingBatch: '=onCreateSellingBatch',
+                selling: '=selling',
+                finishSelling: '=onFinishSelling',
                 removeAllSellingsFromCart: '=onRemoveAllSellingsFromCart',
                 removeSellingFromCart: '=onRemoveSellingFromCart'
             },

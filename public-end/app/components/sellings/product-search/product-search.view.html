@@ -11,7 +11,7 @@
                 md-search-text="searchText"
                 md-items="product in productsQuery(searchText)"
                 md-item-text="product.description"
-                md-selected-item-change="createSelling(product)"
+                md-selected-item-change="productSelect(product)"
                 md-menu-class="autocomplete-custom-template"
                 placeholder="Producto">
                 <md-item-template>
