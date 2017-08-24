@@ -14,30 +14,23 @@
             controller: ['$scope', '$mdDialog', 'ipc', function ($scope, $mdDialog, ipc) {
                 ipc.send('get-products', '');
                 
-                $scope.$on('products:updated', function(event, products) {
-                    $scope.products = products;
-                    $scope.products.map( function (product) {
-                        product.value = product.description.toLowerCase();
-                        return product;
-                    });
-        
-                    $scope.$apply();
-                });
-                
                 $scope.productsQuery = function (query) {
-                    var results = query ? $scope.products.filter(createFilterFor(query)) : $scope.products, deferred;
+                    var results = query ? $scope.products.filter(createFilterFor(query)) : $scope.products;
                     return results;
                 }
 
-                function createFilterFor(query) {
+                function createFilterFor (query) {
                     var lowercaseQuery = angular.lowercase(query);
 
-                    return function filterFn(item) {
-                        return (item.value.indexOf(lowercaseQuery) === 0);
+                    return function filterFn (product) {
+                        return (product.description.toLowerCase().indexOf(lowercaseQuery) === 0);
                     };
                 }
 
-               
+                $scope.$on('products:updated', function(event, products) {
+                    $scope.products = products;        
+                    $scope.$apply();
+                });
             }]
         }
     }]);
