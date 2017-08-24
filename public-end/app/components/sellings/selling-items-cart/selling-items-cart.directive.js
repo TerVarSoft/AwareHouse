@@ -8,7 +8,9 @@
         return {
             scope: {
                 sellings: '=items',
-                createSellingBatch: '=onCreateSellingBatch'
+                createSellingBatch: '=onCreateSellingBatch',
+                removeAllSellingsFromCart: '=onRemoveAllSellingsFromCart',
+                removeSellingFromCart: '=onRemoveSellingFromCart'
             },
             templateUrl: './app/components/sellings/selling-items-cart/selling-items-cart.view.html'
         }

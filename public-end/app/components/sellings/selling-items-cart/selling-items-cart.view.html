@@ -1,4 +1,3 @@
-
 <md-toolbar layout="row" class="md-primary">
     <div class="md-toolbar-tools">
         <span>Carrito de Ventas</span>
@@ -14,7 +13,7 @@
             <p> {{ selling.product.description }} </p>
             <p> {{ selling.quantity }} </p>
 
-            <md-icon class="md-secondary" aria-label="deleteSelling" ng-click="">
+            <md-icon class="md-secondary" aria-label="deleteSelling" ng-click="removeSellingFromCart(selling)">
                 <ng-md-icon icon="close" size="25">
                 </ng-md-icon>
             </md-icon>
@@ -23,6 +22,7 @@
     </md-list-item>
 
     <section layout-align="center start">
-        <md-button class="md-raised md-accent" ng-click="createSellingBatch(sellings)">Realizar Venta</md-button>
+        <md-button class="md-raised md-accent" ng-click="removeAllSellingsFromCart()" ng-disabled="sellings.length <= 0">Cancelar</md-button>
+        <md-button class="md-raised md-accent" ng-click="createSellingBatch(sellings)" ng-disabled="sellings.length <= 0">Realizar Venta</md-button>
     </section>
 </md-list>

@@ -34,5 +34,13 @@
             $scope.sellingBatch = sellingBatch;
             $scope.sellingCartItems = [];
         }
+
+        $scope.removeSellingFromCart = function(selling) {
+            _.pull($scope.sellingCartItems, selling);
+        }
+
+        $scope.removeAllSellingsFromCart = function() {
+            $scope.sellingCartItems = [];
+        }
     }]);
 })();
