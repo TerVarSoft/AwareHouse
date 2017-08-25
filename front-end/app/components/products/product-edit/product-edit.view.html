@@ -2,7 +2,7 @@
     <div ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Nuevo Producto</h2>
+                <h2>{{product.code? product.code + ' - ' + product.description : 'Nuevo Producto'}}</h2>
             </div>
         </md-toolbar>
 
@@ -25,7 +25,7 @@
                             <div layout="row" flex=100>
                                 <md-input-container flex=30>
                                     <label>Codigo</label>
-                                    <input ng-model="product.code">
+                                    <input ng-model="product.code" md-autofocus>
                                 </md-input-container>
 
                                 <md-input-container class="md-block" flex=70>

@@ -12,6 +12,7 @@ var productSchema = mongoose.Schema({
     description: String,
     type: Number,
     color: Number,
+    tags: String,
     prices: [productPriceSchema],
     quantity: Number
 });

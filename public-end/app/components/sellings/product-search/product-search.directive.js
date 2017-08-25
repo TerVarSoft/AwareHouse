@@ -10,9 +10,11 @@
                 productSelect: '=onProductSelect'
             },
             templateUrl: './app/components/sellings/product-search/product-search.view.html',
-            controller: ['$scope', '$mdDialog', 'ipc', function ($scope, $mdDialog, ipc) {
+            controller: ['$scope', '$mdDialog', 'ipc', 'SellingConstant', function ($scope, $mdDialog, ipc, SellingConstant) {
                 ipc.send('get-products', '');
                 
+                $scope.productColors = SellingConstant.PRODUCT_COLORS;
+
                 $scope.productsQuery = function (query) {
                     var results = query ? $scope.products.filter(createFilterFor(query)) : $scope.products;
                     return results;
@@ -22,11 +24,12 @@
                     var lowercaseQuery = angular.lowercase(query);
 
                     return function filterFn (product) {
-                        return (product.description.toLowerCase().indexOf(lowercaseQuery) === 0);
+                        return (product.tags.toLowerCase().indexOf(lowercaseQuery) >= 0);
                     };
                 }
 
-                $scope.$on('products:updated', function(event, products) {
+                $scope.$on('products:updated', function(event, products) {                    
+                    $scope.searchText = "";
                     $scope.products = products;
                     $scope.$apply();
                 });

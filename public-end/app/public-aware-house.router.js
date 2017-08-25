@@ -5,17 +5,22 @@
 
     publicAwareHouseApp.config(
         [
-            '$routeProvider',
-            
-            function ($routeProvider) {
+            '$routeProvider', '$mdThemingProvider',
+
+            function ($routeProvider, $mdThemingProvider) {
                 $routeProvider.when(
                     '/sellings', {
                         templateUrl: './app/components/sellings/sellings.view.html',
-                        controller : "SellingsCtrl"
+                        controller: "SellingsCtrl"
                     }
                 );
 
-                $routeProvider.otherwise({redirectTo: '/sellings'});     
+                $routeProvider.otherwise({ redirectTo: '/sellings' });
+
+                $mdThemingProvider.theme('default')
+                    .primaryPalette('teal')
+                    .accentPalette('light-blue');
+
             }
         ]
     );

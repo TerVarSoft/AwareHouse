@@ -9,7 +9,7 @@ const ProductDAO = function () {
 
     const findAll = function () {
         return productMongo.find({})
-            .sort('code')
+            .sort({ code: 1, color: 1 })
             .then((products) => {
                 return products.map(product => {
                     product.id = product._id;
@@ -19,11 +19,15 @@ const ProductDAO = function () {
     }
 
     const findByIds = function (productIds, options) {
+
+        const queryOptions = options || {};
+        const propertiesToSelect = queryOptions.properties || '';
+
         return productMongo.find({
             '_id': {
                 $in: _.map(productIds, productId => new mongoose.Types.ObjectId(productId))
             }
-        }, options.properties).then((products) => {
+        }, propertiesToSelect).then((products) => {
             return products.map(product => {
                 product.id = product._id;
                 return product.toObject();
@@ -59,6 +63,7 @@ const ProductDAO = function () {
                 foundProduct.quantity = productToUpdate.quantity;
                 foundProduct.color = productToUpdate.color;
                 foundProduct.prices = productToUpdate.prices;
+                foundProduct.tags = productToUpdate.tags;
 
                 return foundProduct.save().then(savedProduct => {
                     winston.info(`Product saved successfully: ${savedProduct.code} with id: ${savedProduct._id}`);

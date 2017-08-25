@@ -18,6 +18,10 @@ const UserDAO = function () {
             })
     }
 
+    const findById = function (userId) {
+        return userMongo.findById(userId);
+    }
+
     const findByIds = function (userIds) {
         return userMongo.find({
             '_id': {
@@ -96,7 +100,8 @@ const UserDAO = function () {
 
     return {
         findAll: findAll,
-        findByIds, findByIds,
+        findByIds: findByIds,
+        findById: findById,
         findByCode: findByCode,
         create: create,
         update: update,

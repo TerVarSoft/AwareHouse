@@ -16,6 +16,10 @@
                 $rootScope.$broadcast('sellings:updated', msg);
             });
 
+            electron.ipcRenderer.on('selling:rejectCreation', (event, msg) => {
+                $rootScope.$broadcast('selling:rejectCreation', msg);
+            });            
+
             /**Public */
             electron.ipcRenderer.on('public:askPassword', (event, data) => {
                 $rootScope.$broadcast('public:askPassword', data);

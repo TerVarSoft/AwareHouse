@@ -13,7 +13,7 @@ const SellingService = function () {
             if (user) {
 
                 request.selling.sellerId = user.id;
-                return SellingDAO.create(request.selling).then(() => {
+                return save(request.selling).then(() => {
                     return findAll();
                 })
             } else {
@@ -25,51 +25,45 @@ const SellingService = function () {
         });
     }
 
-    const findAll = function () {
-        return SellingDAO.findAll().then(sellings => {
-            const productIds = _.flatMap(sellings, selling => {
-                return _.map(selling.items, sellingItem => {
-                    return sellingItem.productId;
-                })
-            });
+    const save = function (sellingToUpdate) {
+        const productIds = _.map(sellingToUpdate.items, sellingItem => {
+            return sellingItem.productId;
+        });
 
-            const userIds = _.map(sellings, selling => selling.sellerId);
+        return UsersDAO.findById(sellingToUpdate.sellerId).then(seller => {
+            return ProductDao.findByIds(productIds).then(products => {
 
-            return UsersDAO.findByIds(userIds).then(users => {
-                return ProductDao.findByIds(productIds, { properties: 'code' }).then(products => {
-                    return _.map(sellings, selling => {
-                        var seller = _.find(users, ['id', selling.sellerId]);
+                sellingToUpdate.seller = `${seller.name} ${seller.lastName}`,
+
+                    sellingToUpdate.items = _.map(sellingToUpdate.items, sellingItem => {
+                        var sellingItemProduct = _.find(products, ['id', sellingItem.productId]);
+
+                        /**Update product after selling */
+                        sellingItemProduct.quantity = sellingItemProduct.quantity - sellingItem.quantity;
+                        sellingItemProduct.quantity = sellingItemProduct.quantity >= 0 ? sellingItemProduct.quantity : 0;
+                        ProductDao.update(sellingItemProduct);
 
                         return {
-                            createdAt: selling.createdAt,
-                            code: selling.code,
-                            seller: `${seller.name} ${seller.lastName}`,
-                            items: _.map(selling.items, item => {
-
-                                var productCode = _.find(products, ['id', item.productId]).code;
-                                
-                                return {
-                                    quantity: item.quantity,
-                                    product: productCode
-                                }
-                            })
+                            quantity: sellingItem.quantity,
+                            productId: sellingItem.productId,
+                            product: `${sellingItemProduct.code} - ${sellingItemProduct.description}`
                         }
-                    });
-                })
-            });
+                    })
 
+                if (!sellingToUpdate.id) {
+                    winston.verbose(`No selling id found for: ${sellingToUpdate.code}, Creating the selling`,
+                        loggingOptions);
+
+                    return SellingDAO.create(sellingToUpdate).then();
+                } else {
+                    return SellingDAO.update(sellingToUpdate);
+                }
+            });
         });
     }
 
-    const save = function (sellingToUpdate) {
-        if (!sellingToUpdate.id) {
-            winston.verbose(`No selling id found for: ${sellingToUpdate.code}, Creating the selling`,
-                loggingOptions);
-
-            return SellingDAO.create(sellingToUpdate);
-        } else {
-            return SellingDAO.update(sellingToUpdate);
-        }
+    const findAll = function () {
+        return SellingDAO.findAll();
     }
 
     const remove = function (sellingToDelete) {

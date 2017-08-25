@@ -5,6 +5,7 @@ const { ipcMain } = require('electron');
 const loggingOptions = { layer: "ipc", file: "sellings.ipc.js" };
 
 const SellingService = require('./../services/sellings.service')();
+const ProductService = require('./../services/products.service')();
 
 const SellingsIpc = function (windows) {
 
@@ -24,6 +25,10 @@ const SellingsIpc = function (windows) {
             SellingService.requestSellingCreate(request).then(sellings => {
                 if(sellings){
                     notifyWindows('sellings:updated', sellings);
+
+                    ProductService.findAll().then(function (products) {
+                        notifyWindows('products:updated', products);
+                    });
                 } else {
                     notifyWindows('selling:rejectCreation', '');
                 }
