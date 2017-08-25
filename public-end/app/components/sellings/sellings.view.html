@@ -1,5 +1,5 @@
 <div ng-cloak layout="row">
-    <div flex="40">
+    <div flex-gt-sm="40">
         <div layout="column">
             <product-search on-product-select="addToCart"></product-search>
 
@@ -19,7 +19,7 @@
 
     <div flex-gt-sm="60" flex>
         <md-content>
-            <sellings-list sellings="sellings"></sellings-list>
+            <sellings-list on-print="print" sellings="sellings"></sellings-list>
         </md-content>
-    </div>
+    </div>    
 </div>

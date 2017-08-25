@@ -8,7 +8,7 @@
         return {
             scope: {
                 sellings: '=sellings',
-                createSellingBatch: '=onCreateSellingBatch'
+                print: '=onPrint'
             },
             templateUrl: './app/components/sellings/sellings-list/sellings-list.view.html',
             link: function (scope, element, attrs) {

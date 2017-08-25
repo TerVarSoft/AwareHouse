@@ -4,6 +4,13 @@
             Lista de Ventas
         </md-truncate>
         <span flex></span>
+
+        <md-button class="md-icon-button" ng-click="print($event)">
+            <md-icon aria-label="deleteUser">
+                <ng-md-icon icon="print" size="25">
+                </ng-md-icon>
+            </md-icon>
+        </md-button>
     </div>
 </md-toolbar>
 
@@ -19,9 +26,8 @@
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row md-select="sellingItem" md-select-id="id"
-                 md-auto-select ng-repeat="sellingItem in sellingItems">
-                
+            <tr md-row md-select="sellingItem" md-select-id="id" md-auto-select ng-repeat="sellingItem in sellingItems">
+
                 <td md-cell>{{ sellingItem.createdAt }}</td>
                 <td md-cell>{{ sellingItem.sellingCode }}</td>
                 <td md-cell>{{ sellingItem.product }}</td>
