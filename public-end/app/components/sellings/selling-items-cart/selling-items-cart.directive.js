@@ -12,7 +12,10 @@
                 removeAllSellingsFromCart: '=onRemoveAllSellingsFromCart',
                 removeSellingFromCart: '=onRemoveSellingFromCart'
             },
-            templateUrl: './app/components/sellings/selling-items-cart/selling-items-cart.view.html'
+            templateUrl: './app/components/sellings/selling-items-cart/selling-items-cart.view.html',
+            controller: ['$scope', 'SellingConstant', function($scope, SellingConstant) {
+                $scope.productColors = SellingConstant.PRODUCT_COLORS;
+            }]
         }
     }]);
 })();

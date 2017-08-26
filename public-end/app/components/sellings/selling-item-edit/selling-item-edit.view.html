@@ -4,10 +4,12 @@
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Venta de Producto</h2>
+                <span flex></span>
+                <p>({{sellingItem.product.quantity}} Unit.)</p>
             </div>
         </md-toolbar>
         <md-dialog-content class="md-dialog-content">
-            <p>{{sellingItem.product.code}}  - {{sellingItem.product.description}} ({{sellingItem.product.quantity}} Unit.)</p>
+            <p>({{productColors[sellingItem.product.color].value}}) {{sellingItem.product.code}}  - {{sellingItem.product.description}}</p>
             <br/>
             <md-input-container class="md-block">
                 <label>Cantidad</label>

@@ -8,6 +8,13 @@ const loggingOptions = { layer: "services", file: "sellings.service.js" };
 
 const SellingService = function () {
 
+    var PRODUCT_COLORS = [
+        { key: 0, value: 'Natural', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#c2c4c3'} },
+        { key: 1, value: 'Titanio', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#424242'} },
+        { key: 2, value: 'Champagne', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#b79e5e'} },
+        { key: 3, value: 'Blanco', style: {'color': '#000', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#f5f5f7'} },
+    ];
+
     const requestSellingCreate = function (request) {
         return UsersDAO.findByCode(request.userCode).then(function (user) {
             if (user) {
@@ -47,7 +54,7 @@ const SellingService = function () {
                             quantity: sellingItem.quantity,
                             price: sellingItem.price,
                             productId: sellingItem.productId,
-                            product: `${sellingItemProduct.code} - ${sellingItemProduct.description}`
+                            product: `${sellingItemProduct.code} - ${sellingItemProduct.description} (${PRODUCT_COLORS[sellingItemProduct.color].value})`
                         }
                     })
 

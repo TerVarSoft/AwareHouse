@@ -10,6 +10,7 @@
             $scope.sellingItem.price = product.prices[0] ? product.prices[0].value : 0;
 
             $scope.productPriceTypes = SellingConstant.PRODUCT_PRICE_TYPES;
+            $scope.productColors = SellingConstant.PRODUCT_COLORS;
 
             $scope.save = function() {
                 $mdDialog.hide($scope.sellingItem);
