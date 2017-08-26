@@ -11,7 +11,7 @@
         <div class="md-list-item-text">
             <h3> {{ sellingItem.product.code }} ({{sellingItem.quantity}} Unit.) </h3>
             <p> ({{productColors[sellingItem.product.color].value}}) {{ sellingItem.product.description }} </p>
-            <p> Precio: {{ sellingItem.price }}  Total: {{ sellingItem.price *  sellingItem.quantity}}</p>
+            <p> Precio: {{ sellingItem.price }} Bs.  Total: {{ sellingItem.price *  sellingItem.quantity}} Bs.</p>
 
             <md-icon class="md-secondary" aria-label="deleteSelling" ng-click="removeSellingFromCart(sellingItem)">
                 <ng-md-icon icon="close" size="25">

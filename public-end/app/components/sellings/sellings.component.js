@@ -72,6 +72,10 @@
                     return sellingItem;
                 });
 
+                selling.total = _.reduce(selling.items, function(sum, item) {
+                    return sum + item.total;
+                  }, 0);
+
                 if (!selling) {
                     $scope.$parent.notify("No tenemos una venta con ese codigo!");
                     return;
@@ -101,11 +105,12 @@
                 documentPDF.text('ALUIMPORT', 105, 40, 'center');
 
                 documentPDF.setFontSize(14);
-                documentPDF.text('Codigo de Venta: ' + selling.code, 20, 60);
-                documentPDF.text('Fecha: ' + sellingDate, 20, 70);
-                documentPDF.text('Vendedor: ' + selling.seller, 20, 80);
+                documentPDF.text(`Codigo de Venta: ${selling.code}`, 20, 60);
+                documentPDF.text(`Fecha: ${sellingDate}`, 20, 70);
+                documentPDF.text(`Vendedor: ${selling.seller}`, 20, 80);
+                documentPDF.text(`Total: ${selling.total}  Bs.`, 20, 90);
 
-                documentPDF.autoTable(columns, selling.items, { startY: 90 });
+                documentPDF.autoTable(columns, selling.items, { startY: 100 });
 
                 documentPDF.save('Reporte Venta ' + selling.code + '.pdf');
             }
