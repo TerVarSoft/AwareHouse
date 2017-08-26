@@ -66,6 +66,12 @@
             function savePDF(code) {
                 var selling = findSelling(code);
 
+                selling.items = _.map(selling.items, sellingItem => {
+                    sellingItem.total = sellingItem.quantity * sellingItem.price;
+
+                    return sellingItem;
+                });
+
                 if (!selling) {
                     $scope.$parent.notify("No tenemos una venta con ese codigo!");
                     return;
@@ -78,10 +84,15 @@
                     {
                         dataKey: "product",
                         title: "Producto"
-                    },
-                    {
+                    },{
                         dataKey: "quantity",
                         title: "Cantidad"
+                    },{
+                        dataKey: "price",
+                        title: "Precio"
+                    },{
+                        dataKey: "total",
+                        title: "Total"
                     }
                 ];
 
@@ -114,6 +125,7 @@
                     items: _.map($scope.newSelling.items, sellingItem => {
                         return {
                             quantity: sellingItem.quantity,
+                            price: sellingItem.price,
                             productId: sellingItem.product.id
                         }
                     })

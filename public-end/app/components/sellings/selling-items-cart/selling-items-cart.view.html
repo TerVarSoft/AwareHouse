@@ -9,11 +9,11 @@
 
     <md-list-item class="md-2-line" ng-repeat="sellingItem in selling.items">
         <div class="md-list-item-text">
-            <h3> {{ sellingItem.product.code }} </h3>
+            <h3> {{ sellingItem.product.code }} ({{sellingItem.quantity}} Unit.) </h3>
             <p> {{ sellingItem.product.description }} </p>
-            <p> Cantidad: {{ sellingItem.quantity }} </p>
+            <p> Precio: {{ sellingItem.price }}  Total: {{ sellingItem.price *  sellingItem.quantity}}</p>
 
-            <md-icon class="md-secondary" aria-label="deleteSelling" ng-click="removeSellingFromCart(selling)">
+            <md-icon class="md-secondary" aria-label="deleteSelling" ng-click="removeSellingFromCart(sellingItem)">
                 <ng-md-icon icon="close" size="25">
                 </ng-md-icon>
             </md-icon>

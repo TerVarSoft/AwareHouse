@@ -45,6 +45,7 @@ const SellingService = function () {
 
                         return {
                             quantity: sellingItem.quantity,
+                            price: sellingItem.price,
                             productId: sellingItem.productId,
                             product: `${sellingItemProduct.code} - ${sellingItemProduct.description}`
                         }

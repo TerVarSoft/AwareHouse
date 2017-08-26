@@ -21,7 +21,7 @@ const SellingsIpc = function (windows) {
 
         ipcMain.on('request-selling-create', (event, request) => {
             winston.info('Requesting to create a selling', loggingOptions);
-
+            
             SellingService.requestSellingCreate(request).then(sellings => {
                 if(sellings){
                     notifyWindows('sellings:updated', sellings);

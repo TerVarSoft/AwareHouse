@@ -21,8 +21,10 @@
                 <th md-column><span>Fecha</span></th>
                 <th md-column><span>Codigo</span></th>
                 <th md-column><span>Producto</span></th>
-                <th md-column><span>Unidades</span></th>
                 <th md-column><span>Vendedor</span></th>
+                <th md-column><span>Unidades</span></th>
+                <th md-column><span>Precio</span></th>
+                <th md-column><span>Total</span></th>
             </tr>
         </thead>
         <tbody md-body>
@@ -31,8 +33,10 @@
                 <td md-cell>{{ sellingItem.createdAt }}</td>
                 <td md-cell>{{ sellingItem.sellingCode }}</td>
                 <td md-cell>{{ sellingItem.product }}</td>
-                <td md-cell>{{ sellingItem.quantity }}</td>
                 <td md-cell>{{ sellingItem.seller }}</td>
+                <td md-cell>{{ sellingItem.quantity }}</td>
+                <td md-cell>{{ sellingItem.price }} Bs.</td>
+                <td md-cell>{{ sellingItem.quantity * sellingItem.price }} Bs.</td>
             </tr>
         </tbody>
     </table>

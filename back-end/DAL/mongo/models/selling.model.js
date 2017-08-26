@@ -3,6 +3,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 var sellingItemSchema = mongoose.Schema({
     quantity: Number,
+    price: Number,
     productId: String,
     product: String,
 });

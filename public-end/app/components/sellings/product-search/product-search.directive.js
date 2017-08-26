@@ -7,7 +7,7 @@
 
         return {
             scope: {
-                productSelect: '=onProductSelect'
+                productSelectParent: '=onProductSelect'
             },
             templateUrl: './app/components/sellings/product-search/product-search.view.html',
             controller: ['$scope', '$mdDialog', 'ipc', 'SellingConstant', function ($scope, $mdDialog, ipc, SellingConstant) {
@@ -18,6 +18,11 @@
                 $scope.productsQuery = function (query) {
                     var results = query ? $scope.products.filter(createFilterFor(query)) : $scope.products;
                     return results;
+                }
+
+                $scope.productSelect = function (product) {
+                    $scope.searchText = "";
+                    $scope.productSelectParent(product);
                 }
 
                 function createFilterFor (query) {

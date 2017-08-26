@@ -13,6 +13,14 @@
                 <label>Cantidad</label>
                 <input md-autofocus ng-model="sellingItem.quantity" type="number" aria-label="sellingQuantity" />
             </md-input-container>
+            <md-input-container class="md-block">
+                <label>Tipo</label>
+                <md-select ng-model="sellingItem.price">
+                    <md-option ng-repeat="price in sellingItem.product.prices" value="{{price.value}}">
+                        ({{productPriceTypes[price.type].value}}) {{price.value}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
         </md-dialog-content>
         <md-dialog-actions>
             <button class="md-primary md-button" type="button" ng-click="cancel()">Cancelar</button>
