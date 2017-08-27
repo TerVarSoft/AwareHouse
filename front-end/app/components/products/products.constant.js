@@ -12,8 +12,8 @@
         ],
         PRODUCT_COLORS: [
             { key: 0, value: 'Natural', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#c2c4c3'} },
-            { key: 1, value: 'Titanio', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#424242'} },
-            { key: 2, value: 'Champagne', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#b79e5e'} },
+            { key: 1, value: 'Titanio', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#b79e5e'} },
+            { key: 2, value: 'Champagne', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#7d4617'} },
             { key: 3, value: 'Blanco', style: {'color': '#000', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#f5f5f7'} },
         ],
         PRODUCT_PRICE_TYPES: [

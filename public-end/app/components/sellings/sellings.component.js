@@ -119,7 +119,7 @@
                     return;
                 }
 
-                var sellingDate = moment(sellings[0].createdAt).format('YYYY/MM/DD HH:mm:ss');
+                var sellingDate = sellings[0].createdAt;
                 var documentPDF = new jsPDF();
 
                 var columns = [
@@ -148,13 +148,13 @@
                 documentPDF.text(`Vendedor: ${sellings[0].seller}`, 20, 80);
                 documentPDF.text(`Total: ${sellingTotal}  Bs.`, 20, 90);
 
-                documentPDF.autoTable(columns, selling.items, { startY: 100 });
+                documentPDF.autoTable(columns, sellings, { startY: 100 });
 
                 documentPDF.save('Reporte Venta ' + sellings[0].code + '.pdf');
             }
 
             function findSelling(code) {
-                return _.find($scope.sellingsData.sellings, function (selling) {
+                return _.filter($scope.sellingsData.sellings, function (selling) {
                     return selling.code == code;
                 });
             }
