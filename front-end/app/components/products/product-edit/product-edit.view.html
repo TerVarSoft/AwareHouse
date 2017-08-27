@@ -1,4 +1,4 @@
-<md-dialog aria-label="Mango (Fruit)">
+<md-dialog style="width:500px" aria-label="Edit product">
     <div ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -6,11 +6,12 @@
             </div>
         </md-toolbar>
 
-        <md-dialog-content>
-            <md-tabs md-dynamic-height md-border-bottom>
-                <md-tab label="detalles">
-                    <div class="md-dialog-content">
-                        <form>
+        <div flex=100>
+            <md-dialog-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="detalles">
+                        <div class="md-dialog-content">
+
                             <div layout="row" flex=100>
                                 <md-input-container class="md-block" flex=100>
                                     <label>Tipo</label>
@@ -34,13 +35,8 @@
                                 </md-input-container>
                             </div>
 
-                            <div layout "row" flex=100>
-                                <md-input-container class="md-block" flex=50>
-                                    <label>Cantidad</label>
-                                    <input type="number" ng-model="product.quantity">
-                                </md-input-container>
-
-                                <md-input-container class="md-block" flex=50>
+                            <div layout="row" flex=100>
+                                <md-input-container class="md-block" flex=100>
                                     <label>Color</label>
                                     <md-select ng-model="product.color">
                                         <md-option ng-repeat="color in colors" value="{{color.key}}">
@@ -49,56 +45,71 @@
                                     </md-select>
                                 </md-input-container>
                             </div>
-                        </form>
-                    </div>
-                </md-tab>
-                <md-tab label="precios">
-                    <div class="md-dialog-content">
-                        <div>
-                            <form layout="row" flex=100 ng-submit="addNewPrice()">
-                                <md-input-container class="md-block" flex="60">
-                                    <label>Tipo</label>
-                                    <md-select ng-model="newPrice.type">
-                                        <md-option ng-repeat="priceType in priceTypesToDisplay" ng-value="{{priceType.key}}">
-                                            {{priceType.value}}
-                                        </md-option>
-                                    </md-select>
+
+                            <div layout "row" flex=100>
+                                <md-input-container class="md-block" flex=50>
+                                    <label>Cantidad</label>
+                                    <input type="number" ng-model="product.quantity">
                                 </md-input-container>
 
-                                <md-input-container class="md-block" flex="40">
-                                    <label>Precio (Bs.)</label>
-                                    <input type="number" ng-model="newPrice.value">
+                                <md-input-container class="md-block" flex=50>
+                                    <label>Precio Real</label>
+                                    <input type="number" ng-model="product.realPrice">
                                 </md-input-container>
-                            </form>
+                            </div>
                         </div>
+                    </md-tab>
+                    <md-tab label="precios">
+                        <div class="md-dialog-content" layout="row" layout-wrap>
+                            <div flex=100 layout="row">
+                                <form layout="row" flex=100 ng-submit="addNewPrice()">
+                                    <div flex="55">
+                                        <md-input-container class="md-block" flex=100>
+                                            <label>Tipo</label>
+                                            <md-select ng-model="newPrice.type">
+                                                <md-option ng-repeat="priceType in priceTypesToDisplay" ng-value="{{priceType.key}}">
+                                                    {{priceType.value}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
 
-                        <div flex=100>
-                            <md-subheader class="md-no-sticky">Lista de Precios</md-subheader>
-                            <md-list flex>
-                                <md-list-item ng-repeat="price in product.prices ">
-                                    <p> ({{ priceTypes[price.type].value }}) {{ price.value }} Bs.</p>
-                                    <md-icon class="md-secondary" aria-label="deletePrice" ng-click="removePrice(price)">
-                                        <ng-md-icon icon="close" size="25">
-                                        </ng-md-icon>
-                                    </md-icon>
-                                    <!--<md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>-->
-                                </md-list-item>
-                            </md-list>
+                                    <div flex="40">
+                                        <md-input-container class="md-block" flex=100>
+                                            <label>Precio (Bs.)</label>
+                                            <input type="number" ng-model="newPrice.value">
+                                        </md-input-container>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div flex=100>
+                                <md-subheader class="md-no-sticky">Lista de Precios</md-subheader>
+                                <md-list flex>
+                                    <md-list-item ng-repeat="price in product.prices ">
+                                        <p> ({{ priceTypes[price.type].value }}) {{ price.value }} Bs.</p>
+                                        <md-icon class="md-secondary" aria-label="deletePrice" ng-click="removePrice(price)">
+                                            <ng-md-icon icon="close" size="25">
+                                            </ng-md-icon>
+                                        </md-icon>
+                                    </md-list-item>
+                                </md-list>
+                            </div>
                         </div>
-                    </div>
-                </md-tab>
-            </md-tabs>
+                    </md-tab>
+                </md-tabs>
 
 
-        </md-dialog-content>
+            </md-dialog-content>
 
-        <md-dialog-actions layout="row">
-            <md-button ng-click="cancel()">
-                Cancelar
-            </md-button>
-            <md-button ng-click="save()">
-                Guardar
-            </md-button>
-        </md-dialog-actions>
+            <md-dialog-actions layout="row">
+                <md-button ng-click="cancel()">
+                    Cancelar
+                </md-button>
+                <md-button ng-click="save()">
+                    Guardar
+                </md-button>
+            </md-dialog-actions>
+        </div>
     </div>
 </md-dialog>

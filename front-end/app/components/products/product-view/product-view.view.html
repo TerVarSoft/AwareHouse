@@ -46,11 +46,15 @@
                     <p>Color</p>
                     <p class="md-secondary">{{colors[product.color].value}}</p>
                 </md-list-item>
+                <md-list-item>
+                    <p>Precio Real</p>
+                    <p class="md-secondary">{{product.realPrice}}</p>
+                </md-list-item>
             </md-list>
 
         </md-card>
         <md-card flex=40>
-            <md-subheader class="md-no-sticky">Precios</md-subheader>
+            <md-subheader class="md-no-sticky">Precios de Venta</md-subheader>
             <md-list>
                 <md-list-item ng-repeat="price in product.prices">
                     <p> ({{ priceTypes[price.type].value }}) {{ price.value }} Bs. </p>

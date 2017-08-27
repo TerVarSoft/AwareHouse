@@ -62,6 +62,7 @@ const ProductDAO = function () {
                 foundProduct.description = productToUpdate.description;
                 foundProduct.quantity = productToUpdate.quantity;
                 foundProduct.color = productToUpdate.color;
+                foundProduct.realPrice = productToUpdate.realPrice;
                 foundProduct.prices = productToUpdate.prices;
                 foundProduct.tags = productToUpdate.tags;
 

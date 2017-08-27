@@ -13,6 +13,7 @@ var productSchema = mongoose.Schema({
     type: Number,
     color: Number,
     tags: String,
+    realPrice: Number,
     prices: [productPriceSchema],
     quantity: Number
 });
