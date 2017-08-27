@@ -29,6 +29,16 @@ const SellingDAO = function () {
         });
     }
 
+    const findByCode = function (code) {
+        return sellingMongo.find({ code: code })
+            .then(sellings => {
+                return sellings.map(selling => {
+                    selling.id = selling._id;
+                    return selling.toObject();
+                });
+            });
+    }
+
 
     const createMultiple = function (newSellings) {
 
@@ -100,6 +110,7 @@ const SellingDAO = function () {
 
     return {
         findAll: findAll,
+        findByCode: findByCode,
         createMultiple: createMultiple,
         update: update,
         remove: remove

@@ -2,3 +2,5 @@ node_modules
 build
 dist
 typings
+
+back-end/DAL/mongo/mongoose.wrapper.js

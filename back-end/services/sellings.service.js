@@ -9,10 +9,10 @@ const loggingOptions = { layer: "services", file: "sellings.service.js" };
 const SellingService = function () {
 
     var PRODUCT_COLORS = [
-        { key: 0, value: 'Natural', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#c2c4c3'} },
-        { key: 1, value: 'Titanio', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#b79e5e'} },
-        { key: 2, value: 'Champagne', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#7d4617'} },
-        { key: 3, value: 'Blanco', style: {'color': '#000', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#f5f5f7'} },
+        { key: 0, value: 'Natural', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#c2c4c3' } },
+        { key: 1, value: 'Titanio', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#b79e5e' } },
+        { key: 2, value: 'Champagne', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#7d4617' } },
+        { key: 3, value: 'Blanco', style: { 'color': '#000', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#f5f5f7' } },
     ];
 
     const requestSellingCreate = function (request) {
@@ -61,12 +61,17 @@ const SellingService = function () {
         return SellingDAO.findAll(options);
     }
 
+    const findByCode = function (code) {
+        return SellingDAO.findByCode(code);
+    }
+
     const remove = function (sellingToDelete) {
         return SellingsDAO.remove(sellingToDelete);
     }
 
     return {
         findAll: findAll,
+        findByCode: findByCode,
         requestSellingCreate: requestSellingCreate,
         save: save,
         remove: remove

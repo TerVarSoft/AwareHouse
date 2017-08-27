@@ -11,7 +11,7 @@ const SellingsIpc = function (windows) {
 
     var init = function () {
 
-         ipcMain.on('get-sellings', (event, request) => {
+        ipcMain.on('get-sellings', (event, request) => {
             winston.info(`Requesting page ${request.page} from sellings`, loggingOptions);
 
             SellingService.findAll(request).then(function (sellings) {
@@ -21,9 +21,9 @@ const SellingsIpc = function (windows) {
 
         ipcMain.on('request-selling-create', (event, request) => {
             winston.info('Requesting to create a selling', loggingOptions);
-            
+
             SellingService.requestSellingCreate(request).then(sellingsResponse => {
-                if(sellingsResponse){
+                if (sellingsResponse) {
                     notifyWindows('sellings:created', sellingsResponse);
 
                     ProductService.findAll().then(function (products) {
@@ -56,9 +56,17 @@ const SellingsIpc = function (windows) {
             });
         });
 
+        ipcMain.on('get-sellings-single-report', (event, sellingCode) => {
+            winston.info(`Requesting sellings for code ${sellingCode}`, loggingOptions);
+
+            SellingService.findByCode(sellingCode).then(function (sellings) {
+               notifyWindows('sellings:singleReport', sellings);
+            });
+        });
+
         function notifyWindows(channel, data) {
             _.each(windows, window => {
-                if(window.object) {
+                if (window.object) {
                     window.content().send(channel, data);
                 }
             });

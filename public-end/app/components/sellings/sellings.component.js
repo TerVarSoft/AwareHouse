@@ -4,7 +4,7 @@
     const publicAwareHouseApp = angular.module('publicAwareHouseApp');
 
     publicAwareHouseApp.controller('SellingsCtrl',
-        ['$scope', '$timeout', '$q', '$mdDialog', 'ipc', function ($scope, $timeout, $q, $mdDialog, ipc) {
+        ['$scope', '$timeout', '$q', '$mdDialog', 'ipc', 'SellingsPrint', function ($scope, $timeout, $q, $mdDialog, ipc, SellingsPrint) {
 
             $scope.$parent.title = "Ventas";
             $scope.newSellings = [];
@@ -56,7 +56,7 @@
                 $scope.newSellings = [];
             }
 
-            $scope.print = function (event) {
+            $scope.printSingleReport = function (event) {
                 var confirm = $mdDialog.prompt()
                     .title('Imprimir Venta')
                     .textContent('Codigo')
@@ -66,10 +66,8 @@
                     .cancel('Cancelar');
 
                 $mdDialog.show(confirm).then(function (code) {
-                    savePDF(code);
-                }, function () {
-                    $scope.status = 'supuestamente lo negativo';
-                });
+                    SellingsPrint.printSingleReport(code);
+                }, function () { });
             };
 
             /** Ipc Event Handlers */
@@ -100,65 +98,6 @@
                     return selling;
                 });
             }
-
-            function savePDF(code) {
-                var sellings = findSelling(code);
-
-                sellings = _.map(sellings, selling => {
-                    selling.total = selling.quantity * selling.price;
-
-                    return selling;
-                });
-
-                var sellingTotal = _.reduce(sellings, function (sum, selling) {
-                    return sum + selling.total;
-                }, 0);
-
-                if (!sellings || sellings.length < 1) {
-                    $scope.$parent.notify("No tenemos una venta con ese codigo!");
-                    return;
-                }
-
-                var sellingDate = sellings[0].createdAt;
-                var documentPDF = new jsPDF();
-
-                var columns = [
-                    {
-                        dataKey: "product",
-                        title: "Producto"
-                    }, {
-                        dataKey: "quantity",
-                        title: "Cantidad"
-                    }, {
-                        dataKey: "price",
-                        title: "Precio"
-                    }, {
-                        dataKey: "total",
-                        title: "Total"
-                    }
-                ];
-
-                documentPDF.setFont('Times', 'bold', 40);
-                documentPDF.setFontSize(40);
-                documentPDF.text('ALUIMPORT', 105, 40, 'center');
-
-                documentPDF.setFontSize(14);
-                documentPDF.text(`Codigo de Venta: ${sellings[0].code}`, 20, 60);
-                documentPDF.text(`Fecha: ${sellingDate}`, 20, 70);
-                documentPDF.text(`Vendedor: ${sellings[0].seller}`, 20, 80);
-                documentPDF.text(`Total: ${sellingTotal}  Bs.`, 20, 90);
-
-                documentPDF.autoTable(columns, sellings, { startY: 100 });
-
-                documentPDF.save('Reporte Venta ' + sellings[0].code + '.pdf');
-            }
-
-            function findSelling(code) {
-                return _.filter($scope.sellingsData.sellings, function (selling) {
-                    return selling.code == code;
-                });
-            }
-
             function addToCart(sellingItem) {
                 $scope.newSellings.push(sellingItem);
             }
