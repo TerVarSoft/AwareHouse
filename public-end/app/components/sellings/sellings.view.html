@@ -1,0 +1,25 @@
+<div ng-cloak layout="row">
+    <div flex-gt-sm="30">
+        <div layout="column">
+            <product-search on-product-select="addToCart"></product-search>
+
+            <md-divider></md-divider>
+
+            <div flex-gt-sm="100" flex>
+                <md-content>
+                    <selling-items-cart on-finish-selling="askSellerPassword" sellings="newSellings" on-remove-all-sellings-from-cart="removeAllSellingsFromCart"
+                        on-remove-selling-from-cart="removeSellingFromCart">
+                    </selling-items-cart>
+                </md-content>
+            </div>
+        </div>
+    </div>
+
+    <md-divider></md-divider>
+
+    <div flex-gt-sm="70" flex>
+        <md-content>
+            <sellings-list query-options="listOptions" on-print="print" on-get-sellings="getSellings" sellings-data="sellingsData"></sellings-list>
+        </md-content>
+    </div>
+</div>

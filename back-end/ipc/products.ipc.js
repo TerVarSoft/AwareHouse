@@ -41,7 +41,9 @@ const ProductsIpc = function (windows) {
 
         function notifyWindows(channel, data) {
             _.each(windows, window => {
-                window.content().send(channel, data);
+                if(window.object) {
+                    window.content().send(channel, data);
+                }
             });
         }
     }

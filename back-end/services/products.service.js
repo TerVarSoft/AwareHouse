@@ -9,10 +9,12 @@ const ProductService = function() {
     }
 
     const save = function(productToUpdate) {
+        productToUpdate.tags=`${productToUpdate.code} ${productToUpdate.description}`;
+        
         if(!productToUpdate.id) {
             winston.verbose(`No product id found for: ${productToUpdate.code}, Creating the product` , 
                 loggingOptions);
-
+            
             return ProductDAO.create(productToUpdate);
         } else {
             return ProductDAO.update(productToUpdate);

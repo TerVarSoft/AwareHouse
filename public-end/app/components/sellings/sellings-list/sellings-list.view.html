@@ -1,0 +1,45 @@
+<md-toolbar class="md-table-toolbar md-primary" layout-align="center center">
+    <div class="md-toolbar-tools">
+        <md-truncate style="position: absolute; left: 60px; right: 170px; top: 20px; bottom: 13px;">
+            Lista de Ventas
+        </md-truncate>
+        <span flex></span>
+
+        <md-button class="md-icon-button" ng-click="print($event)">
+            <md-icon aria-label="deleteUser">
+                <ng-md-icon icon="print" size="25">
+                </ng-md-icon>
+            </md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+            <tr md-row>
+                <th md-column><span>Fecha</span></th>
+                <th md-column><span>Codigo</span></th>
+                <th md-column><span>Producto</span></th>
+                <th md-column><span>Vendedor</span></th>
+                <th md-column><span>Unidades</span></th>
+                <th md-column><span>Precio</span></th>
+                <th md-column><span>Total</span></th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row md-select="selling" md-select-id="id" md-auto-select ng-repeat="selling in sellingsData.sellings">
+
+                <td md-cell>{{ selling.createdAt }}</td>
+                <td md-cell>{{ selling.code }}</td>
+                <td md-cell>{{ selling.product }}</td>
+                <td md-cell>{{ selling.seller }}</td>
+                <td md-cell>{{ selling.quantity }}</td>
+                <td md-cell>{{ selling.price }} Bs.</td>
+                <td md-cell>{{ selling.quantity * selling.price }} Bs.</td>
+            </tr>
+        </tbody>
+    </table>
+</md-table-container>
+<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{sellingsData.count}}" 
+    md-on-paginate="getSellings" md-page-select></md-table-pagination>

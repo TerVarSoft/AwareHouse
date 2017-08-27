@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    const awareHouseApp = angular.module('awareHouseApp');
+    const publicAwareHouseApp = angular.module('publicAwareHouseApp');
 
     /**IMPORTANT: This key value pairs need to be in orden!
      *  in favour of easy access */
-    awareHouseApp.constant('ProductConstant', {
+    publicAwareHouseApp.constant('SellingConstant', {
         PRODUCT_TYPES: [
             { key: 0, value: 'Perfil de Aluminio', icon: 'border_all' },
             { key: 1, value: 'Accesorio', icon: 'build' }

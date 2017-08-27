@@ -4,8 +4,8 @@ const adminWindow = require('./admin.window');
 
 var publicWindow = windowManager.createNew('public', 'Publico',
     'file://' + __dirname + './../public-end/index.html', false, {
-        'width': 1000,
-        'height': 700,
+        'width': 1400,
+        'height': 720,
         'showDevTools': true,
         'resizable': true
     });
@@ -17,7 +17,7 @@ var publicMenu = [
             {
                 label: 'Administracion',
                 click: function () {
-                    adminWindow.open();
+                    publicWindow.content().send('public:askPassword', '');
                 },
                 accelerator: 'CmdOrCtrl+A'
             }

@@ -2,11 +2,19 @@
 <html ng-app="publicAwareHouseApp">
 
 <head>
-    <title>Ventas</title>
+    <title>ALUIMPORT</title>
 
     <link rel="stylesheet" href="../node_modules/angular-material/angular-material.min.css" />
     <link rel="stylesheet" href="../node_modules/angular-material-data-table/dist/md-data-table.min.css" type="text/css" />
 
+    <link rel="stylesheet" href="./app/components/sellings/sellings.style.css" />
+
+    <!-- Init jsPDF -->
+    <script>
+        var jsPDF = require('jspdf');
+    </script>
+    <script src="../node_modules/jspdf/dist/jspdf.min.js"></script>
+    <script src="../node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
     <script src="../node_modules/angular/angular.min.js"></script>
     <script src="../node_modules/angular-route/angular-route.min.js"></script>
     <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
@@ -14,6 +22,7 @@
     <script src="../node_modules/angular-material/angular-material.min.js"></script>
     <script src="../node_modules/angular-material-icons/angular-material-icons.min.js"></script>
     <script type="text/javascript" src="../node_modules/angular-material-data-table/dist/md-data-table.min.js"></script>
+    <script src="../node_modules/moment/min/moment.min.js"></script>
 
     <script src="../node_modules/lodash/lodash.min.js"></script>
 
@@ -22,7 +31,23 @@
     <!-- comments:comment-block html -->
 
     <script src="./app/public-aware-house.module.js"></script>
+    <script src="./app/public-aware-house.ipc.js"></script>
+    <script src="./app/public-aware-house.router.js"></script>
     <script src="./app/public-aware-house.controller.js"></script>
+
+    <script src="./app/components/sellings/sellings.constant.js"></script>
+
+    <script src="./app/components/sellings/sellings.component.js"></script>
+
+    <script src="./app/components/shared/ask-password/ask-password.controller.js"></script>
+    <script src="./app/components/sellings/selling-edit/selling-edit.controller.js"></script>
+
+    <script src="./app/components/sellings/product-search/product-search.directive.js"></script>
+    <script src="./app/components/sellings/sellings-cart/sellings-cart.directive.js"></script>
+    <script src="./app/components/sellings/sellings-list/sellings-list.directive.js"></script>
+
+    <script src="./app/components/sellings/sellings.service.js"></script>
+
     <!-- endcomments -->
 
     <!-- comments:uncomment-block html -->
@@ -38,7 +63,9 @@
         <md-toolbar class="md-hue-2" layout-align="center center">
             {{title}}
         </md-toolbar>
-        Heyy!
+        <ng-view class="page" flex>
+            <h1>Loading...</h1>
+        </ng-view>
     </div>
 </body>
 

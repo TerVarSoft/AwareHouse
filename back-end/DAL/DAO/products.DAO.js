@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash/core');
 const winston = require('./../../winston.wrapper');
 var productMongo = require('../mongo/models/product.model');
 
@@ -8,13 +9,34 @@ const ProductDAO = function () {
 
     const findAll = function () {
         return productMongo.find({})
-            .sort('code')
+            .sort({ code: 1, color: 1 })
             .then((products) => {
                 return products.map(product => {
                     product.id = product._id;
                     return product.toObject();
                 });
             })
+    }
+
+    const findByIds = function (productIds, options) {
+
+        const queryOptions = options || {};
+        const propertiesToSelect = queryOptions.properties || '';
+
+        return productMongo.find({
+            '_id': {
+                $in: _.map(productIds, productId => new mongoose.Types.ObjectId(productId))
+            }
+        }, propertiesToSelect).then((products) => {
+            return products.map(product => {
+                product.id = product._id;
+                return product.toObject();
+            });
+        });
+    }
+
+    const findById = function (productId) {
+        return productMongo.findById(productId);
     }
 
     const create = function (newProductData) {
@@ -41,6 +63,7 @@ const ProductDAO = function () {
                 foundProduct.quantity = productToUpdate.quantity;
                 foundProduct.color = productToUpdate.color;
                 foundProduct.prices = productToUpdate.prices;
+                foundProduct.tags = productToUpdate.tags;
 
                 return foundProduct.save().then(savedProduct => {
                     winston.info(`Product saved successfully: ${savedProduct.code} with id: ${savedProduct._id}`);
@@ -70,6 +93,8 @@ const ProductDAO = function () {
 
     return {
         findAll: findAll,
+        findByIds: findByIds,
+        findById: findById,
         create: create,
         update: update,
         remove: remove

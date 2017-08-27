@@ -1,0 +1,36 @@
+<md-toolbar layout="row" class="md-primary">
+    <div class="md-toolbar-tools">
+        <span>Productos</span>
+    </div>
+</md-toolbar>
+
+<div layout="column" ng-cloak>
+    <md-content layout-padding layout="column"> 
+        <form ng-submit="$event.preventDefault()">
+            <md-autocomplete
+                md-search-text="searchText"
+                md-no-cache="true"
+                md-items="product in productsQuery(searchText)"
+                md-item-text="product.description"
+                md-selected-item-change="productSelect(product)"
+                md-menu-class="autocomplete-custom-template"
+                placeholder="Producto">
+                <md-item-template class="md-2-line">
+                    <span class="item-title">
+                        <md-icon  aria-label="product-icon" ng-style="productColors[product.color].style">
+                        </md-icon>
+                        <span> {{ product.description }} </span>
+                      </span>
+                      <span class="item-metadata">
+                        <span class="item-metastat">
+                          <strong>Codigo:</strong> {{product.code}}
+                        </span>
+                        <span class="item-metastat">
+                          <strong>Cantidad:</strong> {{product.quantity}}
+                        </span>
+                      </span>
+                </md-item-template>
+            </md-autocomplete>
+        </form>
+    </md-content>
+</div>

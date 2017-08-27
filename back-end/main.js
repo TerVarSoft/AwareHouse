@@ -23,12 +23,18 @@ app.on('ready', function () {
     // Create the browser window.
     windowManager.init({});
 
-    /**Specifi Ipc Configurations */
-    var ProductsIpc = require('./ipc/products.ipc')([adminWindow, publicWindow]);
-    var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);            
+    /**General Ipc Configurations */
+    var PublicIpc = require('./ipc/public.ipc')([publicWindow], adminWindow);
 
+    /**Specific Ipc Configurations */
+    var ProductsIpc = require('./ipc/products.ipc')([adminWindow, publicWindow]);
+    var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);
+    var SellingsIpc = require('./ipc/sellings.ipc')([adminWindow, publicWindow]);
+
+    PublicIpc.init();
     ProductsIpc.init();
     UsersIpc.init();
+    SellingsIpc.init();
 
     publicWindow.open();
 });

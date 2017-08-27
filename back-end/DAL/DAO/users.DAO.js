@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const winston = require('./../../winston.wrapper');
+const _ = require('lodash/core');
 var userMongo = require('../mongo/models/user.model');
 
 const loggingOptions = { layer: "dal", file: "users.DAO.js" };
@@ -15,6 +16,37 @@ const UserDAO = function () {
                     return user.toObject();
                 });
             })
+    }
+
+    const findById = function (userId) {
+        return userMongo.findById(userId);
+    }
+
+    const findByIds = function (userIds) {
+        return userMongo.find({
+            '_id': {
+                $in: _.map(userIds, userId => new mongoose.Types.ObjectId(userId))
+            }
+        }).then(users => {
+            return users.map(user => {
+                user.id = user._id;
+                return user.toObject();
+            });
+        });
+    }
+
+    const findByCode = function (code) {
+        return userMongo.findOne({ code: code })
+            .then(foundUser => {
+                if (foundUser) {
+                    foundUser.id = foundUser._id;
+                    winston.verbose(`Found User by code: ${foundUser.name} with id: ${foundUser._id}`);
+                } else {
+                    winston.warn(`No user found by code`);
+                }
+
+                return foundUser;
+            });
     }
 
     const create = function (newUserData) {
@@ -68,6 +100,9 @@ const UserDAO = function () {
 
     return {
         findAll: findAll,
+        findByIds: findByIds,
+        findById: findById,
+        findByCode: findByCode,
         create: create,
         update: update,
         remove: remove

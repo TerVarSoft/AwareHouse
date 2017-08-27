@@ -13,6 +13,7 @@
             templateUrl: './app/components/products/product-list/product-list.view.html',
             link:  function postLink(scope, element, attrs) {
                 scope.productTypes = ProductsUtil.getProductTypes();
+                scope.productColors = ProductsUtil.getProductColors();
             }
         }
     }]);

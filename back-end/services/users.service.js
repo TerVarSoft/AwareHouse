@@ -30,10 +30,18 @@ const UserService = function () {
         return UserDAO.remove(userToDelete);
     }
 
+    const validateAdminCode = function (code) {
+        return UserDAO.findByCode(code).then(user => {
+            // True if Admin
+            return (user && user.role == 0);
+        });
+    }
+
     return {
         findAll: findAll,
         save: save,
-        remove: remove
+        remove: remove,
+        validateAdminCode: validateAdminCode
     }
 }
 
