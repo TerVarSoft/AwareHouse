@@ -13,9 +13,9 @@
                 edit: '=onEditUser'
             },
             templateUrl: './app/components/users/user-list/user-list.view.html',
-            link:  function postLink(scope, element, attrs) {
-                scope.roles = UserConstant.USER_ROLES;
-            }
+            controller: ['$scope', 'UserConstant', function($scope, UserConstant) {
+                $scope.roles = UserConstant.USER_ROLES;
+            }]
         }
     }]);
 })();

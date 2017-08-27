@@ -3,18 +3,23 @@
 
     const awareHouseApp = angular.module('awareHouseApp');
 
-    awareHouseApp.directive('productList', ['ProductsUtil', function(ProductsUtil) {
-        
+    awareHouseApp.directive('productList', ['ProductsUtil', function (ProductsUtil) {
+
         return {
             scope: {
                 products: '=',
                 selectProduct: '=onSelectProduct'
             },
             templateUrl: './app/components/products/product-list/product-list.view.html',
-            link:  function postLink(scope, element, attrs) {
-                scope.productTypes = ProductsUtil.getProductTypes();
-                scope.productColors = ProductsUtil.getProductColors();
-            }
+            controller: ['$scope', function ($scope) {
+                $scope.productTypes = ProductsUtil.getProductTypes();
+                $scope.productColors = ProductsUtil.getProductColors();
+                $scope.queryFilter = { tags: '' };
+                
+                $scope.search = function () {
+                    $scope.queryFilter.tags = $scope.searchText;
+                }
+            }]
         }
     }]);
 })();

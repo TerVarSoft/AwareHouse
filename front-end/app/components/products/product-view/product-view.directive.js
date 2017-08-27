@@ -3,7 +3,7 @@
 
     const awareHouseApp = angular.module('awareHouseApp');
 
-    awareHouseApp.directive('productView', ['ProductsUtil', function(ProductsUtil) {
+    awareHouseApp.directive('productView', ['ProductsUtil', function (ProductsUtil) {
         return {
             scope: {
                 product: '=',
@@ -11,11 +11,11 @@
                 deleteProduct: '=onDeleteProduct'
             },
             templateUrl: './app/components/products/product-view/product-view.view.html',
-            link:  function postLink(scope, element, attrs) {
-                scope.productTypes = ProductsUtil.getProductTypes();
-                scope.priceTypes = ProductsUtil.getProductPriceTypes();
-                scope.colors = ProductsUtil.getProductColors();
-            }
+            controller: ['$scope', 'ProductsUtil', function ($scope, ProductsUtil) {
+                $scope.productTypes = ProductsUtil.getProductTypes();
+                $scope.priceTypes = ProductsUtil.getProductPriceTypes();
+                $scope.colors = ProductsUtil.getProductColors();
+            }]
         }
     }]);
 })();

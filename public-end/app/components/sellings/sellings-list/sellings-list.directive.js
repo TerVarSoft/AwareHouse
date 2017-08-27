@@ -13,7 +13,6 @@
                 print: '=onPrint'
             },
             templateUrl: './app/components/sellings/sellings-list/sellings-list.view.html',
-            
         }
     }]);
 })();
