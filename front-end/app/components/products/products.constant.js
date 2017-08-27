@@ -18,9 +18,9 @@
         ],
         PRODUCT_PRICE_TYPES: [
             { key: 0, value: 'Publico' },
-            { key: 1, value: '50%' },
-            { key: 2, value: '65%' },
-            { key: 3, value: '80%' }
+            { key: 1, value: 'Precio 2' },
+            { key: 2, value: 'Precio 3' },
+            { key: 3, value: 'Precio 4' }
         ]
     });
 })();

@@ -1,7 +1,7 @@
 <md-toolbar class="md-table-toolbar md-primary" layout-align="center center">
     <div class="md-toolbar-tools">
         <md-truncate style="position: absolute; left: 60px; right: 170px; top: 20px; bottom: 13px;">
-            Lista de Ventas
+            Lista de Ventas ({{sellingsData.meta.totalDay}} Bs.)
         </md-truncate>
         <span flex></span>
 
@@ -41,5 +41,5 @@
         </tbody>
     </table>
 </md-table-container>
-<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{sellingsData.count}}" 
+<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{sellingsData.meta.count}}" 
     md-on-paginate="getSellings" md-page-select></md-table-pagination>

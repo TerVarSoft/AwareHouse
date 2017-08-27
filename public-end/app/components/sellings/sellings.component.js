@@ -90,7 +90,7 @@
             });
 
             function updateSellings(sellingsData) {
-                $scope.sellingsData.count = sellingsData.meta.count;
+                $scope.sellingsData.meta = sellingsData.meta;
                 $scope.sellingsData.sellings = _.map(sellingsData.data, selling => {
                     selling.createdAt = moment(selling.createdAt)
                         .format('YYYY/MM/DD HH:mm:ss');

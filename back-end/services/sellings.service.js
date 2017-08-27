@@ -9,10 +9,10 @@ const loggingOptions = { layer: "services", file: "sellings.service.js" };
 const SellingService = function () {
 
     var PRODUCT_COLORS = [
-        { key: 0, value: 'Natural', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#c2c4c3' } },
-        { key: 1, value: 'Titanio', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#b79e5e' } },
-        { key: 2, value: 'Champagne', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#7d4617' } },
-        { key: 3, value: 'Blanco', style: { 'color': '#000', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#f5f5f7' } },
+        { key: 0, value: 'Natural' },
+        { key: 1, value: 'Titanio' },
+        { key: 2, value: 'Champagne' },
+        { key: 3, value: 'Blanco' },
     ];
 
     const requestSellingCreate = function (request) {

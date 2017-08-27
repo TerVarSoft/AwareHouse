@@ -9,23 +9,38 @@ const SellingDAO = function () {
 
     const findAll = function (options) {
         const itemsPerPage = options.limit || 10;
+        const now = new Date();
+        const sellingsDayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+        const sellingsDayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
 
         return sellingMongo.count().then(count => {
-            return sellingMongo.find({})
-                .sort('-createdAt')
-                .skip((options.page - 1) * itemsPerPage)
-                .limit(itemsPerPage)
-                .then(sellings => {
-                    return {
-                        meta: {
-                            count: count
-                        },
-                        data: sellings.map(selling => {
-                            selling.id = selling._id;
-                            return selling.toObject();
-                        })
+            return sellingMongo.aggregate([{
+                $match: { createdAt: { $gte: sellingsDayStart, $lt: sellingsDayEnd } },
+            }, {
+                $group: {
+                    _id: null,
+                    total: {
+                        $sum: { $multiply: ['$price', '$quantity'] }
                     }
-                });
+                }
+            }]).then(totalData => {
+                return sellingMongo.find({})
+                    .sort('-createdAt')
+                    .skip((options.page - 1) * itemsPerPage)
+                    .limit(itemsPerPage)
+                    .then(sellings => {
+                        return {
+                            meta: {
+                                count: count,
+                                totalDay: totalData[0] ? totalData[0].total : 0
+                            },
+                            data: sellings.map(selling => {
+                                selling.id = selling._id;
+                                return selling.toObject();
+                            })
+                        }
+                    });
+            });
         });
     }
 
