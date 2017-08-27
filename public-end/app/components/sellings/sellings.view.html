@@ -7,7 +7,7 @@
 
             <div flex-gt-sm="100" flex>
                 <md-content>
-                    <selling-items-cart on-finish-selling="askSellerPassword" selling="newSelling" on-remove-all-sellings-from-cart="removeAllSellingsFromCart"
+                    <selling-items-cart on-finish-selling="askSellerPassword" sellings="newSellings" on-remove-all-sellings-from-cart="removeAllSellingsFromCart"
                         on-remove-selling-from-cart="removeSellingFromCart">
                     </selling-items-cart>
                 </md-content>
@@ -19,7 +19,7 @@
 
     <div flex-gt-sm="70" flex>
         <md-content>
-            <sellings-list on-print="print" sellings="sellings"></sellings-list>
+            <sellings-list query-options="listOptions" on-print="print" on-get-sellings="getSellings" sellings-data="sellingsData"></sellings-list>
         </md-content>
     </div>
 </div>

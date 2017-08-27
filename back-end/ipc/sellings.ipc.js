@@ -11,10 +11,10 @@ const SellingsIpc = function (windows) {
 
     var init = function () {
 
-        ipcMain.on('get-sellings', () => {
-            winston.info('Requesting all sellings', loggingOptions);
+         ipcMain.on('get-sellings', (event, request) => {
+            winston.info(`Requesting page ${request.page} from sellings`, loggingOptions);
 
-            SellingService.findAll().then(function (sellings) {
+            SellingService.findAll(request).then(function (sellings) {
                 notifyWindows('sellings:updated', sellings);
             });
         });
@@ -22,9 +22,9 @@ const SellingsIpc = function (windows) {
         ipcMain.on('request-selling-create', (event, request) => {
             winston.info('Requesting to create a selling', loggingOptions);
             
-            SellingService.requestSellingCreate(request).then(sellings => {
-                if(sellings){
-                    notifyWindows('sellings:updated', sellings);
+            SellingService.requestSellingCreate(request).then(sellingsResponse => {
+                if(sellingsResponse){
+                    notifyWindows('sellings:created', sellingsResponse);
 
                     ProductService.findAll().then(function (products) {
                         notifyWindows('products:updated', products);

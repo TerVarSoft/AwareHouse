@@ -9,19 +9,18 @@ const loggingOptions = { layer: "services", file: "sellings.service.js" };
 const SellingService = function () {
 
     var PRODUCT_COLORS = [
-        { key: 0, value: 'Natural', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#c2c4c3'} },
-        { key: 1, value: 'Titanio', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#424242'} },
-        { key: 2, value: 'Champagne', style: {'color': '#fff', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#b79e5e'} },
-        { key: 3, value: 'Blanco', style: {'color': '#000', 'border-style': 'solid', 'border-color': 'black' , 'border-width': '2px','background-color':'#f5f5f7'} },
+        { key: 0, value: 'Natural', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#c2c4c3' } },
+        { key: 1, value: 'Titanio', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#424242' } },
+        { key: 2, value: 'Champagne', style: { 'color': '#fff', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#b79e5e' } },
+        { key: 3, value: 'Blanco', style: { 'color': '#000', 'border-style': 'solid', 'border-color': 'black', 'border-width': '2px', 'background-color': '#f5f5f7' } },
     ];
 
     const requestSellingCreate = function (request) {
         return UsersDAO.findByCode(request.userCode).then(function (user) {
             if (user) {
 
-                request.selling.sellerId = user.id;
-                return save(request.selling).then(() => {
-                    return findAll();
+                return save(request.sellings, user).then(() => {
+                    return findAll({ page: 1 });
                 })
             } else {
                 winston.warn(`No user found by code, Rejecting the selling creation`,
@@ -32,46 +31,34 @@ const SellingService = function () {
         });
     }
 
-    const save = function (sellingToUpdate) {
-        const productIds = _.map(sellingToUpdate.items, sellingItem => {
-            return sellingItem.productId;
+    const save = function (sellings, user) {
+        const productIds = _.map(sellings, selling => {
+            return selling.productId;
         });
 
-        return UsersDAO.findById(sellingToUpdate.sellerId).then(seller => {
-            return ProductDao.findByIds(productIds).then(products => {
+        return ProductDao.findByIds(productIds).then(products => {
 
-                sellingToUpdate.seller = `${seller.name} ${seller.lastName}`,
+            sellings = _.map(sellings, selling => {
+                var sellingProduct = _.find(products, ['id', selling.productId]);
 
-                    sellingToUpdate.items = _.map(sellingToUpdate.items, sellingItem => {
-                        var sellingItemProduct = _.find(products, ['id', sellingItem.productId]);
+                /**Update product after selling */
+                sellingProduct.quantity = sellingProduct.quantity - selling.quantity;
+                sellingProduct.quantity = sellingProduct.quantity >= 0 ?
+                    sellingProduct.quantity : 0;
+                ProductDao.update(sellingProduct);
 
-                        /**Update product after selling */
-                        sellingItemProduct.quantity = sellingItemProduct.quantity - sellingItem.quantity;
-                        sellingItemProduct.quantity = sellingItemProduct.quantity >= 0 ? sellingItemProduct.quantity : 0;
-                        ProductDao.update(sellingItemProduct);
+                selling.seller = `${user.name} ${user.lastName}`;
+                selling.product = `${sellingProduct.code} - ${sellingProduct.description} (${PRODUCT_COLORS[sellingProduct.color].value})`
 
-                        return {
-                            quantity: sellingItem.quantity,
-                            price: sellingItem.price,
-                            productId: sellingItem.productId,
-                            product: `${sellingItemProduct.code} - ${sellingItemProduct.description} (${PRODUCT_COLORS[sellingItemProduct.color].value})`
-                        }
-                    })
-
-                if (!sellingToUpdate.id) {
-                    winston.verbose(`No selling id found for: ${sellingToUpdate.code}, Creating the selling`,
-                        loggingOptions);
-
-                    return SellingDAO.create(sellingToUpdate).then();
-                } else {
-                    return SellingDAO.update(sellingToUpdate);
-                }
+                return selling;
             });
+
+            return SellingDAO.createMultiple(sellings);
         });
     }
 
-    const findAll = function () {
-        return SellingDAO.findAll();
+    const findAll = function (options) {
+        return SellingDAO.findAll(options);
     }
 
     const remove = function (sellingToDelete) {

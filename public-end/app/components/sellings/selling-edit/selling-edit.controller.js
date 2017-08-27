@@ -3,7 +3,7 @@
 
     const publicAwareHouseApp = angular.module('publicAwareHouseApp');
 
-    publicAwareHouseApp.controller('SellingItemEditCtrl',
+    publicAwareHouseApp.controller('SellingEditCtrl',
         ['$scope', '$mdDialog', 'SellingConstant','product', function ($scope, $mdDialog, SellingConstant, product) {
             $scope.sellingItem = {};
             $scope.sellingItem.product = product;

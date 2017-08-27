@@ -28,16 +28,18 @@
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row md-select="sellingItem" md-select-id="id" md-auto-select ng-repeat="sellingItem in sellingItems">
+            <tr md-row md-select="selling" md-select-id="id" md-auto-select ng-repeat="selling in sellingsData.sellings">
 
-                <td md-cell>{{ sellingItem.createdAt }}</td>
-                <td md-cell>{{ sellingItem.sellingCode }}</td>
-                <td md-cell>{{ sellingItem.product }}</td>
-                <td md-cell>{{ sellingItem.seller }}</td>
-                <td md-cell>{{ sellingItem.quantity }}</td>
-                <td md-cell>{{ sellingItem.price }} Bs.</td>
-                <td md-cell>{{ sellingItem.quantity * sellingItem.price }} Bs.</td>
+                <td md-cell>{{ selling.createdAt }}</td>
+                <td md-cell>{{ selling.code }}</td>
+                <td md-cell>{{ selling.product }}</td>
+                <td md-cell>{{ selling.seller }}</td>
+                <td md-cell>{{ selling.quantity }}</td>
+                <td md-cell>{{ selling.price }} Bs.</td>
+                <td md-cell>{{ selling.quantity * selling.price }} Bs.</td>
             </tr>
         </tbody>
     </table>
 </md-table-container>
+<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{sellingsData.count}}" 
+    md-on-paginate="getSellings" md-page-select></md-table-pagination>

@@ -7,16 +7,25 @@
         ['$scope', '$timeout', '$q', '$mdDialog', 'ipc', function ($scope, $timeout, $q, $mdDialog, ipc) {
 
             $scope.$parent.title = "Ventas";
-            $scope.newSelling = { items: [] };
-            $scope.sellings = [];
+            $scope.newSellings = [];
+            $scope.sellingsData = {};
 
-            ipc.send('get-sellings', '');
+            $scope.listOptions = {
+                limit: 10,
+                page: 1
+            };
+
+            ipc.send('get-sellings', $scope.listOptions);
+
+            $scope.getSellings = function () {
+                ipc.send('get-sellings', $scope.listOptions);
+            }
 
             $scope.addToCart = function (product) {
                 if (product) {
                     $mdDialog.show({
-                        controller: 'SellingItemEditCtrl',
-                        templateUrl: './app/components/sellings/selling-item-edit/selling-item-edit.view.html',
+                        controller: 'SellingEditCtrl',
+                        templateUrl: './app/components/sellings/selling-edit/selling-edit.view.html',
                         parent: angular.element(document.body),
                         locals: {
                             product: product,
@@ -40,11 +49,11 @@
             }
 
             $scope.removeSellingFromCart = function (selling) {
-                _.pull($scope.newSelling.items, selling);
+                _.pull($scope.newSellings, selling);
             }
 
             $scope.removeAllSellingsFromCart = function () {
-                $scope.newSelling.items = [];
+                $scope.newSellings = [];
             }
 
             $scope.print = function (event) {
@@ -63,38 +72,67 @@
                 });
             };
 
+            /** Ipc Event Handlers */
+            $scope.$on('sellings:created', function (event, sellingsData) {
+                updateSellings(sellingsData)
+
+                $scope.newSellings = [];
+                $scope.listOptions.page = 1;
+                $scope.$apply();
+            });
+
+            $scope.$on('sellings:updated', function (event, sellingsData) {
+                updateSellings(sellingsData)
+
+                $scope.$apply();
+            });
+
+            $scope.$on('selling:rejectCreation', function (event, data) {
+                $scope.$parent.notify('Tu codigo no es correcto!');
+            });
+
+            function updateSellings(sellingsData) {
+                $scope.sellingsData.count = sellingsData.meta.count;
+                $scope.sellingsData.sellings = _.map(sellingsData.data, selling => {
+                    selling.createdAt = moment(selling.createdAt)
+                        .format('YYYY/MM/DD HH:mm:ss');
+
+                    return selling;
+                });
+            }
+
             function savePDF(code) {
-                var selling = findSelling(code);
+                var sellings = findSelling(code);
 
-                selling.items = _.map(selling.items, sellingItem => {
-                    sellingItem.total = sellingItem.quantity * sellingItem.price;
+                sellings = _.map(sellings, selling => {
+                    selling.total = selling.quantity * selling.price;
 
-                    return sellingItem;
+                    return selling;
                 });
 
-                selling.total = _.reduce(selling.items, function(sum, item) {
-                    return sum + item.total;
-                  }, 0);
+                var sellingTotal = _.reduce(sellings, function (sum, selling) {
+                    return sum + selling.total;
+                }, 0);
 
-                if (!selling) {
+                if (!sellings || sellings.length < 1) {
                     $scope.$parent.notify("No tenemos una venta con ese codigo!");
                     return;
                 }
 
-                var sellingDate = moment(selling.createdAt).format('YYYY/MM/DD HH:mm:ss');
+                var sellingDate = moment(sellings[0].createdAt).format('YYYY/MM/DD HH:mm:ss');
                 var documentPDF = new jsPDF();
 
                 var columns = [
                     {
                         dataKey: "product",
                         title: "Producto"
-                    },{
+                    }, {
                         dataKey: "quantity",
                         title: "Cantidad"
-                    },{
+                    }, {
                         dataKey: "price",
                         title: "Precio"
-                    },{
+                    }, {
                         dataKey: "total",
                         title: "Total"
                     }
@@ -105,54 +143,40 @@
                 documentPDF.text('ALUIMPORT', 105, 40, 'center');
 
                 documentPDF.setFontSize(14);
-                documentPDF.text(`Codigo de Venta: ${selling.code}`, 20, 60);
+                documentPDF.text(`Codigo de Venta: ${sellings[0].code}`, 20, 60);
                 documentPDF.text(`Fecha: ${sellingDate}`, 20, 70);
-                documentPDF.text(`Vendedor: ${selling.seller}`, 20, 80);
-                documentPDF.text(`Total: ${selling.total}  Bs.`, 20, 90);
+                documentPDF.text(`Vendedor: ${sellings[0].seller}`, 20, 80);
+                documentPDF.text(`Total: ${sellingTotal}  Bs.`, 20, 90);
 
                 documentPDF.autoTable(columns, selling.items, { startY: 100 });
 
-                documentPDF.save('Reporte Venta ' + selling.code + '.pdf');
+                documentPDF.save('Reporte Venta ' + sellings[0].code + '.pdf');
             }
 
             function findSelling(code) {
-                return _.find($scope.sellings, function (selling) {
+                return _.find($scope.sellingsData.sellings, function (selling) {
                     return selling.code == code;
                 });
             }
 
             function addToCart(sellingItem) {
-                $scope.newSelling.items.push(sellingItem);
+                $scope.newSellings.push(sellingItem);
             }
 
             function requestSellingCreate(userCode) {
-                var sellingToUpdate = {
-                    items: _.map($scope.newSelling.items, sellingItem => {
-                        return {
-                            quantity: sellingItem.quantity,
-                            price: sellingItem.price,
-                            productId: sellingItem.product.id
-                        }
-                    })
-                };
 
                 var request = {
                     userCode: userCode,
-                    selling: sellingToUpdate
+                    sellings: _.map($scope.newSellings, selling => {
+                        return {
+                            quantity: selling.quantity,
+                            price: selling.price,
+                            productId: selling.product.id
+                        }
+                    })
                 }
 
                 ipc.send('request-selling-create', request);
             }
-
-            /** Ipc Event Handlers */
-            $scope.$on('sellings:updated', function (event, sellings) {
-                $scope.sellings = sellings;
-                $scope.newSelling = { items: [] };
-                $scope.$apply();
-            });
-
-            $scope.$on('selling:rejectCreation', function (event, data) {
-                $scope.$parent.notify('Tu codigo no es correcto!');
-            });
         }]);
 })();

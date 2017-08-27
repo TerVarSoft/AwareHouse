@@ -1,26 +1,61 @@
 const mongoose = require('mongoose');
 const winston = require('./../../winston.wrapper');
+const _ = require('lodash');
 var sellingMongo = require('../mongo/models/selling.model');
 
 const loggingOptions = { layer: "dal", file: "sellings.DAO.js" };
 
 const SellingDAO = function () {
 
-    const findAll = function () {
-        return sellingMongo.find({})
-            .sort('-createdAt')
-            .then((sellings) => {
-                return sellings.map(selling => {
+    const findAll = function (options) {
+        const itemsPerPage = options.limit || 10;
+
+        return sellingMongo.count().then(count => {
+            return sellingMongo.find({})
+                .sort('-createdAt')
+                .skip((options.page - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .then(sellings => {
+                    return {
+                        meta: {
+                            count: count
+                        },
+                        data: sellings.map(selling => {
+                            selling.id = selling._id;
+                            return selling.toObject();
+                        })
+                    }
+                });
+        });
+    }
+
+
+    const createMultiple = function (newSellings) {
+
+
+        let newFirstSelling = new sellingMongo(_.pullAt(newSellings, [0])[0]);
+
+        return newFirstSelling.save().then(firstSellCreated => {
+
+            newSellings = _.map(newSellings, selling => {
+                selling.code = firstSellCreated.code;
+                return selling;
+            });
+
+            return sellingMongo.insertMany(newSellings).then(savedSellings => {
+
+                savedSellings.splice(0, 0, firstSellCreated);
+
+                winston.info(`Sellings created successfully: ${savedSellings.length}`, loggingOptions);
+                winston.verbose(`${savedSellings}`, loggingOptions);
+                return savedSellings.map(selling => {
                     selling.id = selling._id;
                     return selling.toObject();
                 });
-            })
-    }
+            });
+        });
 
-    const create = function (newSellingData) {
-        let newSelling = new sellingMongo(newSellingData);
-
-        return newSelling.save(() => { }).then(savedSelling => {
+        return newSellings.create(newSellings).then(savedSelling => {
             winston.info(`Selling created successfully with id: ${savedSelling._id}`);
             winston.verbose(`${savedSelling}`, loggingOptions);
 
@@ -65,7 +100,7 @@ const SellingDAO = function () {
 
     return {
         findAll: findAll,
-        create: create,
+        createMultiple: createMultiple,
         update: update,
         remove: remove
     }

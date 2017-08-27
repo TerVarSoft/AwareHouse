@@ -12,6 +12,10 @@
             });
 
             /**Sellings */
+            electron.ipcRenderer.on('sellings:created', (event, msg) => {
+                $rootScope.$broadcast('sellings:created', msg);
+            });
+
             electron.ipcRenderer.on('sellings:updated', (event, msg) => {
                 $rootScope.$broadcast('sellings:updated', msg);
             });
