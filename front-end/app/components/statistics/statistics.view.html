@@ -1,0 +1,54 @@
+<md-content layout="column" style="height:100%">
+    <div flex=20 layout="row" layout-align="center center">
+        <div flex=30>
+            <h4>Fecha Inicial</h4>
+            <md-datepicker ng-model="startDate" md-placeholder="Fecha Inicial" md-open-on-focus></md-datepicker>
+        </div>
+        <div flex=30>
+            <h4>Fecha Final</h4>
+            <md-datepicker ng-model="endDate" md-placeholder="Fecha Final" md-open-on-focus></md-datepicker>
+        </div>
+        <div flex=20 style="padding-top:40px;">
+            <md-button class="md-raised md-primary" ng-click="calculate()">Calcular</md-datepicker>
+        </div>
+    </div>
+    <div flex=80 layout="row">
+        <md-card flex=80>
+            <statistics-sellings query-options="selligsListOptions" on-get-sellings="getSellings" sellings-data="statisticsData"></statistics-sellings>
+        </md-card>
+        <div flex=20 layout="column">
+            <md-card flex=25>
+                <md-card-title>
+                    # Ventas
+                </md-card-title>
+                <md-card-content layout="row" layout-align="center center">
+                    <h2 flex=40>{{statisticsData.meta.count}}</h2>
+                </md-card-content>
+            </md-card>
+            <md-card flex=25>
+                <md-card-title>
+                    Total (Bs.)
+                </md-card-title>
+                <md-card-content layout="row" layout-align="center center">
+                    <h2 flex=40>{{statisticsData.meta.total}}</h2>
+                </md-card-content>
+            </md-card>
+            <md-card flex=25>
+                <md-card-title>
+                    Ganancia (Bs.)
+                </md-card-title>
+                <md-card-content layout="row" layout-align="center center">
+                    <h2 flex=40>{{statisticsData.meta.revenueAvg}}</h2>
+                </md-card-content>
+            </md-card>
+            <md-card flex=25>
+                <md-card-title>
+                    Promedio Diario (Bs.)
+                </md-card-title>
+                <md-card-content layout="row" layout-align="center center">
+                    <h2 flex=40>{{statisticsData.meta.averagePerDay}}</h2>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</md-content>

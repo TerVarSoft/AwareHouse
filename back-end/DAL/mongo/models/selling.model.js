@@ -8,6 +8,7 @@ var sellingSchema = mongoose.Schema({
     seller: String,
     quantity: Number,
     price: Number,
+    realPrice: Number,
     productId: String,
     product: String,
 });

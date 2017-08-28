@@ -48,6 +48,7 @@ const SellingService = function () {
                 ProductDao.update(sellingProduct);
 
                 selling.seller = `${user.name} ${user.lastName}`;
+                selling.realPrice = sellingProduct.realPrice;
                 selling.product = `${sellingProduct.code} - ${sellingProduct.description} (${PRODUCT_COLORS[sellingProduct.color].value})`
 
                 return selling;
@@ -65,6 +66,10 @@ const SellingService = function () {
         return SellingDAO.findByCode(code);
     }
 
+    const findWithStatistics = function (options) {
+        return SellingDAO.findWithStatistics(options);
+    }
+
     const remove = function (sellingToDelete) {
         return SellingsDAO.remove(sellingToDelete);
     }
@@ -72,6 +77,7 @@ const SellingService = function () {
     return {
         findAll: findAll,
         findByCode: findByCode,
+        findWithStatistics: findWithStatistics,
         requestSellingCreate: requestSellingCreate,
         save: save,
         remove: remove

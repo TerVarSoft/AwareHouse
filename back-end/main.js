@@ -30,11 +30,13 @@ app.on('ready', function () {
     var ProductsIpc = require('./ipc/products.ipc')([adminWindow, publicWindow]);
     var UsersIpc = require('./ipc/users.ipc')([adminWindow, publicWindow]);
     var SellingsIpc = require('./ipc/sellings.ipc')([adminWindow, publicWindow]);
+    var StatisticsIpc = require('./ipc/statistics.ipc')([adminWindow]);
 
     PublicIpc.init();
     ProductsIpc.init();
     UsersIpc.init();
     SellingsIpc.init();
+    StatisticsIpc.init();
 
     publicWindow.open();
 });

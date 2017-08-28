@@ -16,6 +16,13 @@
                 );
 
                 $routeProvider.when(
+                    '/statistics', {
+                        templateUrl: './app/components/statistics/statistics.view.html',
+                        controller: "StatisticsCtrl"
+                    }
+                );
+
+                $routeProvider.when(
                     '/users', {
                         templateUrl: './app/components/users/users.view.html',
                         controller: "UsersCtrl"

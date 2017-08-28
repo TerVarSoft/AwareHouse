@@ -32,7 +32,11 @@
                 $rootScope.$broadcast('user:deleted',msg);
             });
             
-            
+            /**Statistics */
+            electron.ipcRenderer.on('statistics:updated', (event, msg) => {
+                $rootScope.$broadcast('statistics:updated',msg);
+            });
+
             /**Routes */
             electron.ipcRenderer.on('routes:change', (event, route) => {
                 $rootScope.$broadcast('routes:change', route);

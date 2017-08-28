@@ -5,7 +5,7 @@ var adminWindow = windowManager.createNew('admin', 'Administracion',
     'file://' + __dirname + './../front-end/index.html', false, {
         'width': 1000,
         'height': 700,
-        //'showDevTools': true,
+        'showDevTools': true,
         'resizable': true
     });
 
@@ -19,13 +19,18 @@ var adminMenu = [
                     adminWindow.content().send('routes:change', '/products');
                 },
                 accelerator: 'CmdOrCtrl+P'
-            },
-            {
+            }, {
                 label: 'Usuarios',
                 click: function () {
                     adminWindow.content().send('routes:change', '/users');
                 },
                 accelerator: 'CmdOrCtrl+U'
+            }, {
+                label: 'Estadisticas',
+                click: function () {
+                    adminWindow.content().send('routes:change', '/statistics');
+                },
+                accelerator: 'CmdOrCtrl+T'
             }
         ]
     }, {

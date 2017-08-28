@@ -44,6 +44,66 @@ const SellingDAO = function () {
         });
     }
 
+    const findWithStatistics = function (options) {
+        const itemsPerPage = options.limit || 10;
+
+        const start = new Date(options.start);
+        const end = new Date(options.end);
+        const sellingsDayStart = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0);
+        const sellingsDayEnd = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 1, 0, 0, 0);
+
+        winston.info(`Sellings with statistics retrieving from: ${sellingsDayStart}, to: ${sellingsDayEnd}`, loggingOptions);
+
+        const query = { createdAt: { $gte: sellingsDayStart, $lt: sellingsDayEnd } };
+
+        return sellingMongo.count(query).then(count => {
+            return sellingMongo.aggregate([{
+                $match: query,
+            }, {
+                $project: {
+                    'createdAt': { $subtract: ['$createdAt', 4 * 60 * 60 * 1000] },
+                    'total': { $multiply: ['$price', '$quantity'] },
+                    'totalRevenue': { $multiply: ['$quantity', { $subtract: ['$price', '$realPrice'] }] }
+                }
+            }, {
+                $group: {
+                    _id: { "year": { "$year": "$createdAt" }, "month": { "$month": "$createdAt" }, "day": { "$dayOfMonth": "$createdAt" } },
+                    totalPerDay: { $sum: '$total' },
+                    revenueTotalPerDay: { $sum: '$totalRevenue' }
+                },
+            }, {
+                $group: {
+                    _id: null,
+                    total: { $sum: '$totalPerDay' },
+                    totalAvg: { $avg: '$totalPerDay' },
+                    revenueAvg: { $avg: '$revenueTotalPerDay' }
+                }
+            }]).then(statisticsData => {
+                winston.info(`Statistics:`, statisticsData);
+
+                return sellingMongo.find(query)
+                    .sort('-createdAt')
+                    .skip((options.page - 1) * itemsPerPage)
+                    .limit(itemsPerPage)
+                    .then(sellings => {
+                        return {
+                            meta: {
+                                count: count,
+                                averagePerDay: statisticsData[0] ? statisticsData[0].totalAvg : 0,
+                                revenueAvg: statisticsData[0] ? statisticsData[0].revenueAvg : 0,
+                                total: statisticsData[0] ? statisticsData[0].total : 0
+                            },
+                            data: sellings.map(selling => {
+                                selling.id = selling._id;
+                                return selling.toObject();
+                            })
+                        }
+                    });
+            })
+
+        });
+    }
+
     const findByCode = function (code) {
         return sellingMongo.find({ code: code })
             .then(sellings => {
@@ -78,14 +138,6 @@ const SellingDAO = function () {
                     return selling.toObject();
                 });
             });
-        });
-
-        return newSellings.create(newSellings).then(savedSelling => {
-            winston.info(`Selling created successfully with id: ${savedSelling._id}`);
-            winston.verbose(`${savedSelling}`, loggingOptions);
-
-            savedSelling.id = savedSelling._id;
-            return savedSelling.toObject();
         });
     }
 
@@ -125,6 +177,7 @@ const SellingDAO = function () {
 
     return {
         findAll: findAll,
+        findWithStatistics: findWithStatistics,
         findByCode: findByCode,
         createMultiple: createMultiple,
         update: update,
