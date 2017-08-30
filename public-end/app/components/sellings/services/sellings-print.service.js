@@ -35,10 +35,16 @@
                 PrintManager.print(`Reporte de Venta ${sellings[0].code}`);
             });
 
-            electron.ipcRenderer.on('sellings:dateReport', (event, sellings) => {
+            electron.ipcRenderer.on('sellings:dateReport', (event, sellingsData) => {
+                let sellings = formatSellings(sellingsData.data);
+                let sellingsDate = moment(sellings[0].createdAt).format('YYYY/MM/DD');
+
                 PrintManager.init();
                 PrintManager.setTitle("Reporte del Dia");
-                PrintManager.addInfo("");
+                PrintManager.addInfo('Fecha', sellingsDate);
+                PrintManager.addInfo('Total', getSellingsBatchTotal(sellings));
+                PrintManager.addTable(SellingsPrintConstant.SELLINGS_TABLE_COLUMNS, sellings);
+                PrintManager.print(`Reporte de Fecha ${sellingsDate}`);
             });
 
             function formatSellings(sellings) {

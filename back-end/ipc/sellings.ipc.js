@@ -60,7 +60,15 @@ const SellingsIpc = function (windows) {
             winston.info(`Requesting sellings for code ${sellingCode}`, loggingOptions);
 
             SellingService.findByCode(sellingCode).then(function (sellings) {
-               notifyWindows('sellings:singleReport', sellings);
+                notifyWindows('sellings:singleReport', sellings);
+            });
+        });
+
+        ipcMain.on('get-sellings-date-report', (event, sellingsResponse) => {
+            winston.info(`Requesting sellings for date ${sellingsResponse}`, loggingOptions);
+
+            SellingService.findByDate(sellingsResponse).then(function (sellings) {
+                notifyWindows('sellings:dateReport', sellings);
             });
         });
 

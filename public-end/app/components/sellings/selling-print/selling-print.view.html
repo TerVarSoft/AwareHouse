@@ -1,0 +1,24 @@
+<md-dialog aria-label="Print Selling">
+    <form name="printSelling" ng-submit="save()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Imprimir Venta</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-dialog-content">
+            <md-radio-group ng-model="printType">
+                <md-radio-button value="0">Nota de Entrega (Codigo)</md-radio-button>
+                <md-input-container class="md-block" ng-show="printType == 0">
+                    <input md-autofocus type="text" aria-label="printSellingCode" ng-model="code" />
+                </md-input-container>
+
+                <md-radio-button value="1">Reporte del Dia (Fecha)</md-radio-button>
+                <md-datepicker ng-model="date" md-placeholder="Fecha" md-open-on-focus ng-show="printType == 1"></md-datepicker>
+            </md-radio-group>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <button class="md-primary md-button" type="button" ng-click="cancel()">Cancelar</button>
+            <button class="md-primary md-button" type="submit">Guardar</button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

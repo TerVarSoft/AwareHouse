@@ -56,17 +56,19 @@
                 $scope.newSellings = [];
             }
 
-            $scope.printSingleReport = function (event) {
-                var confirm = $mdDialog.prompt()
-                    .title('Imprimir Venta')
-                    .textContent('Codigo')
-                    .placeholder('Codigo de la Venta')
-                    .targetEvent(event)
-                    .ok('Guardar')
-                    .cancel('Cancelar');
-
-                $mdDialog.show(confirm).then(function (code) {
-                    SellingsPrint.printSingleReport(code);
+            $scope.printReport = function (event) {
+                $mdDialog.show({
+                    controller: 'SellingPrintCtrl',
+                    templateUrl: './app/components/sellings/selling-print/selling-print.view.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true
+                }).then(function ([printType, code, date]) {
+                    if (printType == 0) {
+                        SellingsPrint.printSingleReport(code);
+                    }
+                    else if (printType == 1) {
+                        SellingsPrint.printDateReport(date);
+                    }
                 }, function () { });
             };
 

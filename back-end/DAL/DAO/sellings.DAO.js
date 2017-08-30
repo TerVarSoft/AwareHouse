@@ -54,6 +54,38 @@ const SellingDAO = function () {
             });
     }
 
+    const findByDate = function (dateString) {
+        const date = new Date(dateString);
+        const sellingsDayStart = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+        const sellingsDayEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, 0, 0, 0);
+        const query = { createdAt: { $gte: sellingsDayStart, $lt: sellingsDayEnd } };
+
+        return sellingMongo.aggregate([{
+            $match: query,
+        }, {
+            $group: {
+                _id: null,
+                total: {
+                    $sum: { $multiply: ['$price', '$quantity'] }
+                }
+            }
+        }]).then(totalData => {
+            return sellingMongo.find(query)
+                .sort('-createdAt')
+                .then(sellings => {
+                    return {
+                        meta: {
+                            totalDay: totalData[0] ? totalData[0].total : 0
+                        },
+                        data: sellings.map(selling => {
+                            selling.id = selling._id;
+                            return selling.toObject();
+                        })
+                    }
+                });
+        });
+    }
+
 
     const createMultiple = function (newSellings) {
 
@@ -126,6 +158,7 @@ const SellingDAO = function () {
     return {
         findAll: findAll,
         findByCode: findByCode,
+        findByDate: findByDate,
         createMultiple: createMultiple,
         update: update,
         remove: remove

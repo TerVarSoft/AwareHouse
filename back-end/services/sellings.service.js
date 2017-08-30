@@ -65,6 +65,10 @@ const SellingService = function () {
         return SellingDAO.findByCode(code);
     }
 
+    const findByDate = function (date) {
+        return SellingDAO.findByDate(date);
+    }
+
     const remove = function (sellingToDelete) {
         return SellingsDAO.remove(sellingToDelete);
     }
@@ -72,6 +76,7 @@ const SellingService = function () {
     return {
         findAll: findAll,
         findByCode: findByCode,
+        findByDate: findByDate,
         requestSellingCreate: requestSellingCreate,
         save: save,
         remove: remove
